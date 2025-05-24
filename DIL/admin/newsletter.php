@@ -48,7 +48,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // ----- ADD RECORD -----
     if (isset($_POST['add'])) {
         $subject_text = $_POST['subject_text'];
-        $subject_link = $_POST['subject_link'];
         $issue_date   = $_POST['issue_date'];
 
         $uploadedPDF = handlePDFUpload('pdf_file', $uploadDir);
@@ -57,8 +56,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $message = "Error uploading PDF. Please upload a valid PDF file.";
             $activeTab = 'add';
         } else {
-            $stmt = $conn->prepare("INSERT INTO Newsletters (Publication, Publication_link, issue_date, pdf_file) VALUES (?, ?, ?, ?)");
-            $stmt->bind_param("ssss", $subject_text, $subject_link, $issue_date, $uploadedPDF);
+            $stmt = $conn->prepare("INSERT INTO Newsletters (Publication, issue_date, pdf_file) VALUES (?, ?, ?)");
+            $stmt->bind_param("sss", $subject_text, $issue_date, $uploadedPDF);
             if ($stmt->execute()) {
                 $message = "Record added successfully!";
                 $activeTab = 'view';
@@ -74,7 +73,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['update'])) {
         $id           = $_POST['id'];
         $subject_text = $_POST['subject_text'];
-        $subject_link = $_POST['subject_link'];
         $issue_date   = $_POST['issue_date'];
 
         // Check if new PDF uploaded
@@ -86,12 +84,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             if ($uploadedPDF !== null) {
                 // New PDF uploaded, update pdf_file column
-                $stmt = $conn->prepare("UPDATE Newsletters SET Publication=?, Publication_link=?, issue_date=?, pdf_file=? WHERE id=?");
-                $stmt->bind_param("ssssi", $subject_text, $subject_link, $issue_date, $uploadedPDF, $id);
+                $stmt = $conn->prepare("UPDATE Newsletters SET Publication=?, issue_date=?, pdf_file=? WHERE id=?");
+                $stmt->bind_param("sssi", $subject_text, $issue_date, $uploadedPDF, $id);
             } else {
                 // No new PDF, don't update pdf_file column
-                $stmt = $conn->prepare("UPDATE Newsletters SET Publication=?, Publication_link=?, issue_date=? WHERE id=?");
-                $stmt->bind_param("sssi", $subject_text, $subject_link, $issue_date, $id);
+                $stmt = $conn->prepare("UPDATE Newsletters SET Publication=?, issue_date=? WHERE id=?");
+                $stmt->bind_param("ssi", $subject_text, $issue_date, $id);
             }
 
             if ($stmt->execute()) {
@@ -169,7 +167,6 @@ $result = $conn->query("SELECT * FROM Newsletters ORDER BY issue_date ASC");
           <tr>
             <th>ID</th>
             <th>Publication</th>
-            <th>Link</th>
             <th>Issue Date</th>
             <th>PDF</th>
           </tr>
@@ -180,7 +177,6 @@ $result = $conn->query("SELECT * FROM Newsletters ORDER BY issue_date ASC");
               <tr>
                 <td><?php echo $row['id']; ?></td>
                 <td><?php echo htmlspecialchars($row['Publication']); ?></td>
-                <td><a href="<?php echo htmlspecialchars($row['Publication_link']); ?>" target="_blank">Visit</a></td>
                 <td><?php echo strtoupper(date("d-M-Y", strtotime($row["issue_date"]))); ?></td>
                 <td>
                   <?php if ($row['pdf_file']): ?>
@@ -207,10 +203,6 @@ $result = $conn->query("SELECT * FROM Newsletters ORDER BY issue_date ASC");
           <input type="text" class="form-control" id="subject_text" name="subject_text" required>
         </div>
         <div class="mb-3">
-          <label for="subject_link" class="form-label">Publication Link</label>
-          <input type="url" class="form-control" id="subject_link" name="subject_link" required>
-        </div>
-        <div class="mb-3">
           <label for="issue_date" class="form-label">Issue Date</label>
           <input type="date" class="form-control" id="issue_date" name="issue_date" required>
         </div>
@@ -233,10 +225,6 @@ $result = $conn->query("SELECT * FROM Newsletters ORDER BY issue_date ASC");
         <div class="mb-3">
           <label for="subject_text" class="form-label">Publication Text</label>
           <input type="text" class="form-control" id="subject_text" name="subject_text" required>
-        </div>
-        <div class="mb-3">
-          <label for="subject_link" class="form-label">Publication Link</label>
-          <input type="url" class="form-control" id="subject_link" name="subject_link" required>
         </div>
         <div class="mb-3">
           <label for="issue_date" class="form-label">Issue Date</label>
