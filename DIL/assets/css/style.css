@@ -1,0 +1,211 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;700&display=swap');
+
+body {
+  font-family: 'Inter', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.active {
+  color: #fff !important;
+}
+
+.gradient-bar {
+  width: 100%;
+  background: linear-gradient(to right, #062856, #d6f402);
+  display: flex;
+  align-items: center;
+  padding: 8px 16px;  /* Reduced padding */
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 7% 100%, 3% 18%, 0 18%);
+}
+
+.headbar p {
+  font-weight: 500;
+  font-size: 14px;
+  text-align: center;
+}
+
+.social-icons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.social-icons a {
+  font-size: 16px;
+  transition: transform 0.3s ease-in-out;
+}
+
+.social-icons a:hover {
+  transform: scale(1.2);
+}
+
+.contact-bar {
+  background-color: white;
+  border-bottom: 2px solid #ddd;
+  padding: 15px 30px;  /* Reduced padding */
+  text-align: center;
+}
+
+/* New styles for contact items */
+.contact-item {
+  /* Optionally set a fixed height if needed */
+  /* height: 80px; */
+}
+
+.contact-icon {
+  width: 40px;    /* Reduced from 50px */
+  height: 40px;   /* Reduced from 50px */
+}
+
+.contact-text span {
+  display: block;
+  font-weight: bold;
+  color: #ff6600;
+  margin-bottom: 5px;
+  font-size: 1.1rem;  /* Slightly reduced font-size */
+}
+
+.contact-text a {
+  text-decoration: none;
+  color: #ff6600;
+  font-weight: bold;
+}
+
+
+/* Navbar */
+.custom-navbar {
+  background: #073470;
+  height: 80px; /* Increased height */
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+  overflow: visible !important;
+}
+.navbar-nav {
+  display: flex;
+  justify-content: center; /* Centers items horizontally */
+  gap: 20px; /* Adjust spacing */
+  overflow-x: auto;
+  white-space: nowrap;
+  flex-wrap: nowrap !important; /* Prevent items from wrapping to the next line */
+}
+.navbar {
+  overflow: hidden !important;  /* Hide scrollbars inside the navbar */
+  white-space: nowrap; /* Ensure items stay in a single row */
+}
+.dropdown-menu {
+  position: absolute !important; /* Prevents affecting navbar height */
+  max-height: 400px; /* Optional: Keep dropdown from growing too much */
+  overflow-y: auto; /* Allow scrolling inside dropdown */
+}
+
+.navbar-nav .nav-link {
+  font-size: 14px;
+  font-weight: 500;
+  padding: 8px 12px;
+  color: white;
+  transition: all 0.3s ease-in-out;
+  text-transform: uppercase;
+  position: relative;
+}
+
+nav .container {
+  max-width: 100%;
+  padding: 0 20px; /* Adjust spacing */
+  overflow: visible !important;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #FFD700;
+  transform: translateY(-2px);
+}
+
+.navbar-nav .nav-link.active {
+  color: #FFD700;
+}
+
+/* Underline effect for active & hover */
+.navbar-nav .nav-link::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 3px;
+  background-color: #FFD700;
+  transition: width 0.3s ease-in-out;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.navbar-nav .nav-link:hover::after,
+.navbar-nav .nav-link.active::after {
+  width: 80%;
+}
+
+@media (max-width: 992px) {
+  .custom-navbar {
+    height: auto;
+    padding: 10px 0;
+    background: #073470;
+  }
+  .navbar-toggler {
+    display: block;
+    margin: auto; /* Centers the button */
+  }
+
+  .navbar-nav {
+    text-align: center;
+    width: 100%;
+    background: #073470;
+  }
+
+  .navbar-nav .nav-item {
+    display: block;
+    width: 100%;
+    padding: 8px 0;
+  }
+
+  .navbar-nav .nav-link {
+    padding: 12px;
+    font-size: 14px;
+    color: white;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 5px;
+    margin: 5px 0;
+    transition: all 0.3s;
+  }
+
+  .navbar-nav .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    color: #FFD700;
+  }
+}
+/* Responsive Design */
+@media (max-width: 768px) {
+  .gradient-bar {
+    flex-direction: column;
+    text-align: center;
+    clip-path: none;
+    padding: 12px;
+  }
+
+  .headbar p {
+    font-size: 12px;
+  }
+
+  .social-icons a {
+    font-size: 14px;
+  }
+}
+
+.navbar {
+  overflow: visible !important; /* Ensure dropdown does not cause scroll */
+}
+
+/* Ensure dropdown opens outside navbar */
+.dropdown-menu {
+  max-height: 400px; /* Limit dropdown height */
+  overflow-y: auto; /* Allow scrolling inside dropdown */
+  z-index: 1050; /* Ensure it appears above other elements */
+  position: absolute !important; /* Ensure it doesn't expand navbar */
+}

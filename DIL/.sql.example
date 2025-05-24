@@ -1,0 +1,58 @@
+CREATE TABLE admin_users (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    username VARCHAR(100) UNIQUE NOT NULL,
+    email VARCHAR(191) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE TABLE Employees (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(191) UNIQUE NOT NULL, -- Reduced from 255 to 191
+    designation VARCHAR(100) NOT NULL,
+    office_number VARCHAR(50),
+    image_path VARCHAR(255) NOT NULL,
+    position INT NOT NULL DEFAULT 0
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+
+CREATE TABLE IF NOT EXISTS internship_programs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    subject_text VARCHAR(255) NOT NULL,
+    subject_link VARCHAR(255) NOT NULL,
+    issue_date DATE NOT NULL
+);
+
+-- Create the industrial_collaboration table
+CREATE TABLE industrial_collaboration (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    subject_text VARCHAR(255) NOT NULL,
+    subject_link VARCHAR(255) NOT NULL,
+    issue_date DATE NOT NULL
+);
+
+CREATE TABLE job_openings_fresh (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    job_title VARCHAR(255) NOT NULL,
+    job_link VARCHAR(500) NOT NULL,
+    issue_date DATE NOT NULL
+);
+
+CREATE TABLE job_openings_experienced (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    job_title VARCHAR(255) NOT NULL,
+    job_link VARCHAR(500) NOT NULL,
+    issue_date DATE NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS Newsletters (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    Publication VARCHAR(255) NOT NULL,
+    Publication_link VARCHAR(255) NOT NULL,
+    issue_date DATE NOT NULL
+);
+CREATE TABLE Forms (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    form VARCHAR(255) NOT NULL,
+    file_path VARCHAR(255) NOT NULL
+);

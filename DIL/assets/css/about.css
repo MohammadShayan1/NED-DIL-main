@@ -1,0 +1,135 @@
+h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #073470;
+}
+
+h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+}
+
+hr {
+    border: 2px solid #073470;
+    opacity: 0.8;
+}
+
+/* Responsive Styling */
+@media (max-width: 768px) {
+    .row.align-items-center {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .col-md-3 img {
+        max-width: 60px;
+    }
+}
+
+/* Headings */
+h1, h2, h3, h4, h5 {
+    color: #062856;
+}
+
+/* Horizontal Rule */
+hr {
+    border: 2px solid #062856;
+    opacity: 0.8;
+}
+
+/* Cards */
+.card {
+    border: 2px solid #062856;
+    background-color: #ffffff;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(6, 40, 86, 0.2);
+    border-color: #d6f402;
+}
+
+/* Card Titles */
+.card h5 {
+    color: #062856;
+    border-left: 5px solid #d6f402;
+    padding-left: 10px;
+}
+
+/* Employee Info */
+.bg-light {
+    background-color: #f9f9f9 !important;
+}
+
+.fw-semibold, .fw-medium {
+    color: #062856;
+}
+
+/* Icons / images border effect */
+img.rounded-circle {
+    border: 3px solid #d6f402;
+}
+
+/* Contact Heading */
+.text-muted {
+    color: #6c757d !important;
+}
+
+/* Button (Optional) */
+.btn-primary {
+    background-color: #062856;
+    border-color: #062856;
+}
+
+.btn-primary:hover {
+    background-color: #d6f402;
+    border-color: #d6f402;
+    color: #062856;
+}
+/* Mission Section */
+.mission {
+    background: url(../images/missionvision.png) no-repeat center center/cover;
+    min-height: 100vh;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 5rem 0;
+}
+
+.mission h3 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+}
+
+.mission h4 {
+    font-size: 1.7rem;
+    font-weight: 700;
+    margin-top: 1rem;
+}
+
+.mission p {
+    font-size: 1.2rem;
+    max-width: 600px;
+    margin: auto;
+    line-height: 1.6;
+}
+@media (max-width: 768px) {
+    .mission {
+        padding: 3rem 1rem;
+    }
+    .mission h3 {
+        font-size: 1.8rem;
+    }
+    .mission h4 {
+        font-size: 1.5rem;
+    }
+    .mission p {
+        font-size: 1rem;
+        max-width: 90%;
+    }
+}

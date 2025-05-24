@@ -1,0 +1,6 @@
+RewriteEngine On
+
+# Redirect requests without an extension to .php if such a file exists
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule ^(.*)$ $1.php [L]
