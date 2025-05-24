@@ -56,3 +56,8 @@ CREATE TABLE Forms (
     form VARCHAR(255) NOT NULL,
     file_path VARCHAR(255) NOT NULL
 );
+
+ALTER TABLE internship_programs ADD pdf_file VARCHAR(255);
+ALTER TABLE Newsletters ADD COLUMN pdf_file VARCHAR(255) DEFAULT NULL;
+ALTER TABLE job_openings_fresh ADD COLUMN job_pdf VARCHAR(255);
+ALTER TABLE job_openings_experienced ADD COLUMN job_pdf VARCHAR(255);

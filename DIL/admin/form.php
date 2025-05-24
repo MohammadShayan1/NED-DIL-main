@@ -1,222 +1,165 @@
 <?php
-// Include header (session management, sidebar, etc.)
 include('header.php');
-// Include database connection
 require_once('config.php');
 
-$activeTab = 'view'; // Default active tab is "View Data"
+$activeTab = 'view';
 $message = '';
 
-// Process form submissions
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-    // ----- ADD RECORD -----
     if (isset($_POST['add'])) {
         $subject_text = $_POST['subject_text'];
-    
-        // Ensure the uploads directory exists
+        $category = $_POST['category'];
+
         $upload_dir = "../assets/uploads/forms/";
-        if (!is_dir($upload_dir)) {
-            mkdir($upload_dir, 0777, true);
-        }
-    
-        // Check file upload and output error if any
-        if (isset($_FILES['subject_file'])) {
-            if ($_FILES['subject_file']['error'] !== 0) {
-                $message = "File upload error: " . $_FILES['subject_file']['error'];
-                $activeTab = 'add';
-            } else {
-                $file_name   = basename($_FILES["subject_file"]["name"]);
-                $target_file = $upload_dir . time() . "_" . $file_name; // Unique file name
-    
-                if (move_uploaded_file($_FILES["subject_file"]["tmp_name"], $target_file)) {
-                    // Insert record into the database using file path instead of link
-                    $stmt = $conn->prepare("INSERT INTO Forms (form, file_path) VALUES (?, ?)");
-                    $stmt->bind_param("ss", $subject_text, $target_file);
-                    if ($stmt->execute()) {
-                        $message = "Record added successfully!";
-                        $activeTab = 'view';
-                    } else {
-                        $message = "Error: " . $stmt->error;
-                        $activeTab = 'add';
-                    }
-                    $stmt->close();
-                } else {
-                    $message = "File upload failed.";
-                    $activeTab = 'add';
-                }
-            }
-        } else {
-            $message = "Please upload a valid file.";
-            $activeTab = 'add';
-        }
-    }
-    
+        if (!is_dir($upload_dir)) mkdir($upload_dir, 0777, true);
 
-    // ----- UPDATE RECORD -----
-    if (isset($_POST['update'])) {
-        $id           = $_POST['id'];
-        $subject_text = $_POST['subject_text'];
-
-        // Ensure the uploads directory exists
-        $upload_dir = "../assets/uploads/forms/";
-        if (!is_dir($upload_dir)) {
-            mkdir($upload_dir, 0777, true);
-        }
-
-        // Check if a file is uploaded
         if (isset($_FILES['subject_file']) && $_FILES['subject_file']['error'] === 0) {
-            $file_name   = basename($_FILES["subject_file"]["name"]);
-            $target_file = $upload_dir . time() . "_" . $file_name; // Unique file name
+            $file_name = basename($_FILES["subject_file"]["name"]);
+            $target_file = $upload_dir . time() . "_" . $file_name;
 
             if (move_uploaded_file($_FILES["subject_file"]["tmp_name"], $target_file)) {
-                // Update record with new file path
-                $stmt = $conn->prepare("UPDATE Forms SET form = ?, file_path = ? WHERE id = ?");
-                $stmt->bind_param("ssi", $subject_text, $target_file, $id);
-                if ($stmt->execute()) {
-                    $message = "Record updated successfully!";
-                    $activeTab = 'view';
-                } else {
-                    $message = "Error: " . $stmt->error;
-                    $activeTab = 'update';
-                }
-                $stmt->close();
+                $stmt = $conn->prepare("INSERT INTO Forms (form, category, file_path) VALUES (?, ?, ?)");
+                $stmt->bind_param("sss", $subject_text, $category, $target_file);
+                $stmt->execute();
+                $message = "Record added successfully!";
             } else {
                 $message = "File upload failed.";
-                $activeTab = 'update';
             }
         } else {
             $message = "Please upload a valid file.";
-            $activeTab = 'update';
         }
+        $activeTab = 'add';
     }
 
-    // ----- DELETE RECORD -----
-    if (isset($_POST['delete'])) {
+    if (isset($_POST['update'])) {
         $id = $_POST['id'];
+        $subject_text = $_POST['subject_text'];
+        $category = $_POST['category'];
 
-        $stmt = $conn->prepare("DELETE FROM Forms WHERE id = ?");
-        $stmt->bind_param("i", $id);
-        if ($stmt->execute()) {
-            $message = "Record deleted successfully!";
-            $activeTab = 'view';
+        $upload_dir = "../assets/uploads/forms/";
+        if (!is_dir($upload_dir)) mkdir($upload_dir, 0777, true);
+
+        if (isset($_FILES['subject_file']) && $_FILES['subject_file']['error'] === 0) {
+            $file_name = basename($_FILES["subject_file"]["name"]);
+            $target_file = $upload_dir . time() . "_" . $file_name;
+
+            if (move_uploaded_file($_FILES["subject_file"]["tmp_name"], $target_file)) {
+                $stmt = $conn->prepare("UPDATE Forms SET form = ?, category = ?, file_path = ? WHERE id = ?");
+                $stmt->bind_param("sssi", $subject_text, $category, $target_file, $id);
+                $stmt->execute();
+                $message = "Record updated successfully!";
+            } else {
+                $message = "File upload failed.";
+            }
         } else {
-            $message = "Error: " . $stmt->error;
-            $activeTab = 'delete';
+            $message = "Please upload a valid file.";
         }
-        $stmt->close();
+        $activeTab = 'update';
     }
+
+if (isset($_POST['delete'])) {
+    $id = $_POST['id'];
+
+    // Get file path
+    $stmt = $conn->prepare("SELECT file_path FROM Forms WHERE id = ?");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $stmt->bind_result($file_path);
+    $stmt->fetch();
+    $stmt->close();
+
+    // Delete file
+    if ($file_path && file_exists($file_path)) {
+        unlink($file_path);
+    }
+
+    // Delete record
+    $stmt = $conn->prepare("DELETE FROM Forms WHERE id = ?");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+
+    $message = "Record and file deleted successfully!";
+    $activeTab = 'delete';
 }
 
-// Fetch records for the View Data tab
+}
+
 $result = $conn->query("SELECT * FROM Forms");
 ?>
 
-<!-- Main Content Area -->
 <div class="main-content">
-  <?php if ($message != ''): ?>
-      <div class="alert alert-info"><?php echo $message; ?></div>
-  <?php endif; ?>
+<?php if ($message != ''): ?>
+<div class="alert alert-info"><?php echo $message; ?></div>
+<?php endif; ?>
 
-  <!-- Bootstrap Tabs -->
-  <ul class="nav nav-tabs" id="crudTab" role="tablist">
-    <li class="nav-item" role="presentation">
-      <button class="nav-link <?php echo ($activeTab=='view') ? 'active' : ''; ?>" id="view-tab" data-bs-toggle="tab" data-bs-target="#view" type="button" role="tab" aria-controls="view" aria-selected="<?php echo ($activeTab=='view') ? 'true' : 'false'; ?>">View Data</button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link <?php echo ($activeTab=='add') ? 'active' : ''; ?>" id="add-tab" data-bs-toggle="tab" data-bs-target="#add" type="button" role="tab" aria-controls="add" aria-selected="<?php echo ($activeTab=='add') ? 'true' : 'false'; ?>">Add Data</button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link <?php echo ($activeTab=='update') ? 'active' : ''; ?>" id="update-tab" data-bs-toggle="tab" data-bs-target="#update" type="button" role="tab" aria-controls="update" aria-selected="<?php echo ($activeTab=='update') ? 'true' : 'false'; ?>">Update Data</button>
-    </li>
-    <li class="nav-item" role="presentation">
-      <button class="nav-link <?php echo ($activeTab=='delete') ? 'active' : ''; ?>" id="delete-tab" data-bs-toggle="tab" data-bs-target="#delete" type="button" role="tab" aria-controls="delete" aria-selected="<?php echo ($activeTab=='delete') ? 'true' : 'false'; ?>">Delete Data</button>
-    </li>
-  </ul>
-  <div class="tab-content mt-3" id="crudTabContent">
-    <!-- View Data Tab -->
-    <div class="tab-pane fade <?php echo ($activeTab=='view') ? 'show active' : ''; ?>" id="view" role="tabpanel" aria-labelledby="view-tab">
-      <h3>View Records</h3>
-      <table class="table table-bordered table-striped">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Subject</th>
-            <th>File</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php if ($result && $result->num_rows > 0): ?>
-            <?php while ($row = $result->fetch_assoc()): ?>
-              <tr>
-                <td><?php echo $row['id']; ?></td>
-                <td><?php echo $row['form']; ?></td>
-                <td>
-                  <?php if (!empty($row['file_path'])): ?>
-                    <a href="<?php echo $row['file_path']; ?>" download>Download</a>
-                  <?php else: ?>
-                    No file available
-                  <?php endif; ?>
-                </td>
-              </tr>
-            <?php endwhile; ?>
-          <?php else: ?>
-            <tr><td colspan="3">No records found</td></tr>
-          <?php endif; ?>
-        </tbody>
-      </table>
-    </div>
+<ul class="nav nav-tabs" id="crudTab" role="tablist">
+  <li class="nav-item"><button class="nav-link <?php echo ($activeTab=='view') ? 'active' : ''; ?>" data-bs-toggle="tab" data-bs-target="#view">View</button></li>
+  <li class="nav-item"><button class="nav-link <?php echo ($activeTab=='add') ? 'active' : ''; ?>" data-bs-toggle="tab" data-bs-target="#add">Add</button></li>
+  <li class="nav-item"><button class="nav-link <?php echo ($activeTab=='update') ? 'active' : ''; ?>" data-bs-toggle="tab" data-bs-target="#update">Update</button></li>
+  <li class="nav-item"><button class="nav-link <?php echo ($activeTab=='delete') ? 'active' : ''; ?>" data-bs-toggle="tab" data-bs-target="#delete">Delete</button></li>
+</ul>
 
-    <!-- Add Data Tab -->
-    <div class="tab-pane fade <?php echo ($activeTab=='add') ? 'show active' : ''; ?>" id="add" role="tabpanel" aria-labelledby="add-tab">
-      <h3>Add New Record</h3>
-      <form method="POST" action="" enctype="multipart/form-data">
-        <div class="mb-3">
-          <label for="subject_text" class="form-label">Subject Text</label>
-          <input type="text" class="form-control" id="subject_text" name="subject_text" required>
-        </div>
-        <div class="mb-3">
-          <label for="subject_file" class="form-label">Upload File</label>
-          <input type="file" class="form-control" id="subject_file" name="subject_file" required>
-        </div>
-        <button type="submit" name="add" class="btn btn-primary">Add Record</button>
-      </form>
-    </div>
+<div class="tab-content mt-3">
+  <div class="tab-pane fade <?php echo ($activeTab=='view') ? 'show active' : ''; ?>" id="view">
+    <h3>View Records</h3>
+    <table class="table table-bordered">
+      <thead><tr><th>ID</th><th>Subject</th><th>Category</th><th>File</th></tr></thead>
+      <tbody>
+      <?php if ($result->num_rows > 0): while ($row = $result->fetch_assoc()): ?>
+        <tr>
+          <td><?php echo $row['id']; ?></td>
+          <td><?php echo $row['form']; ?></td>
+          <td><?php echo $row['category']; ?></td>
+          <td><a href="<?php echo $row['file_path']; ?>" download>Download</a></td>
+        </tr>
+      <?php endwhile; else: ?>
+        <tr><td colspan="4">No records found</td></tr>
+      <?php endif; ?>
+      </tbody>
+    </table>
+  </div>
 
-    <!-- Update Data Tab -->
-    <div class="tab-pane fade <?php echo ($activeTab=='update') ? 'show active' : ''; ?>" id="update" role="tabpanel" aria-labelledby="update-tab">
-      <h3>Update Record</h3>
-      <form method="POST" action="" enctype="multipart/form-data">
-        <div class="mb-3">
-          <label for="id" class="form-label">Record ID</label>
-          <input type="number" class="form-control" id="id" name="id" required>
-        </div>
-        <div class="mb-3">
-          <label for="subject_text" class="form-label">Subject Text</label>
-          <input type="text" class="form-control" id="subject_text" name="subject_text" required>
-        </div>
-        <div class="mb-3">
-          <label for="subject_file" class="form-label">Upload File</label>
-          <input type="file" class="form-control" id="subject_file" name="subject_file" required>
-        </div>
-        <button type="submit" name="update" class="btn btn-warning">Update Record</button>
-      </form>
-    </div>
+  <div class="tab-pane fade <?php echo ($activeTab=='add') ? 'show active' : ''; ?>" id="add">
+    <h3>Add Record</h3>
+    <form method="POST" enctype="multipart/form-data">
+      <input class="form-control mb-2" type="text" name="subject_text" placeholder="Subject Text" required>
+      <select class="form-control mb-2" name="category" required>
+        <option value="">Select Category</option>
+        <option>Internship</option>
+        <option>Job Placement</option>
+        <option>Final Year Design Project</option>
+        <option>Visit</option>
+      </select>
+      <input class="form-control mb-2" type="file" name="subject_file" required>
+      <button class="btn btn-primary" name="add">Add</button>
+    </form>
+  </div>
 
-    <!-- Delete Data Tab -->
-    <div class="tab-pane fade <?php echo ($activeTab=='delete') ? 'show active' : ''; ?>" id="delete" role="tabpanel" aria-labelledby="delete-tab">
-      <h3>Delete Record</h3>
-      <form method="POST" action="">
-        <div class="mb-3">
-          <label for="id" class="form-label">Record ID</label>
-          <input type="number" class="form-control" id="id" name="id" required>
-        </div>
-        <button type="submit" name="delete" class="btn btn-danger">Delete Record</button>
-      </form>
-    </div>
-  </div> <!-- End Tab Content -->
-</div> <!-- End Main Content -->
+  <div class="tab-pane fade <?php echo ($activeTab=='update') ? 'show active' : ''; ?>" id="update">
+    <h3>Update Record</h3>
+    <form method="POST" enctype="multipart/form-data">
+      <input class="form-control mb-2" type="number" name="id" placeholder="Record ID" required>
+      <input class="form-control mb-2" type="text" name="subject_text" placeholder="Subject Text" required>
+      <select class="form-control mb-2" name="category" required>
+        <option value="">Select Category</option>
+        <option>Internship</option>
+        <option>Job Placement</option>
+        <option>Final Year Design Project</option>
+        <option>Visit</option>
+      </select>
+      <input class="form-control mb-2" type="file" name="subject_file" required>
+      <button class="btn btn-warning" name="update">Update</button>
+    </form>
+  </div>
 
-<?php
-include('footer.php');
-?>
+  <div class="tab-pane fade <?php echo ($activeTab=='delete') ? 'show active' : ''; ?>" id="delete">
+    <h3>Delete Record</h3>
+    <form method="POST">
+      <input class="form-control mb-2" type="number" name="id" placeholder="Record ID" required>
+      <button class="btn btn-danger" name="delete">Delete</button>
+    </form>
+  </div>
+</div>
+</div>
+
+<?php include('footer.php'); ?>

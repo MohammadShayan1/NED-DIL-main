@@ -72,19 +72,36 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     // Delete Record
-    if (isset($_POST['delete'])) {
-        $id = $_POST['id'];
-        $stmt = $conn->prepare("DELETE FROM industrial_collaboration WHERE id=?");
-        $stmt->bind_param("i", $id);
-        if ($stmt->execute()) {
-            $message = "Record deleted successfully!";
-            $activeTab = 'view';
-        } else {
-            $message = "Error: " . $stmt->error;
-            $activeTab = 'delete';
-        }
-        $stmt->close();
+// Delete Record
+if (isset($_POST['delete'])) {
+    $id = $_POST['id'];
+
+    // Step 1: Get the file path from the database
+    $stmt = $conn->prepare("SELECT file_path FROM industrial_collaboration WHERE id=?");
+    $stmt->bind_param("i", $id);
+    $stmt->execute();
+    $stmt->bind_result($file_path);
+    $stmt->fetch();
+    $stmt->close();
+
+    // Step 2: Delete the file from the server
+    if (!empty($file_path) && file_exists($file_path)) {
+        unlink($file_path);
     }
+
+    // Step 3: Delete the record from the database
+    $stmt = $conn->prepare("DELETE FROM industrial_collaboration WHERE id=?");
+    $stmt->bind_param("i", $id);
+    if ($stmt->execute()) {
+        $message = "Record deleted successfully!";
+        $activeTab = 'view';
+    } else {
+        $message = "Error: " . $stmt->error;
+        $activeTab = 'delete';
+    }
+    $stmt->close();
+}
+
 }
 
 $result = $conn->query("SELECT * FROM industrial_collaboration ORDER BY issue_date ASC");
