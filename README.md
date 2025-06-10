@@ -2,7 +2,8 @@
 
 <div align="center">
 
-![DIL Logo](https://dil.neduet.edu.pk/assets/images/dillogo.png)
+
+![DIL Logo](https://media.licdn.com/dms/image/v2/D4D03AQEl9gz4JApraA/profile-displayphoto-shrink_200_200/profile-displayphoto-shrink_200_200/0/1719384367228?e=1755129600&v=beta&t=nywvBB9_QgjrGGrxMzmdkGdJ652VC4x0dvi68d_1_a4)
 
 ### Bridging Academia, Industry & Government for a Better Tomorrow
 

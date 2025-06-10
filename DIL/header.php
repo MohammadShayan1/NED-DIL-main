@@ -67,9 +67,9 @@ require_once 'local-social-seo.php';
           Directorate of Industrial Liaison (DIL) || <span style="color:#d6f402;"> <i>“Collaborate, Innovate, Transform”</i></span>
         </p>
         <div class="social-icons d-flex">
-          <a href="#" class="text-blue mx-2"><i class="fab fa-linkedin"></i></a>
+          <a href="https://www.linkedin.com/in/directorate-of-industrial-liaison-652b3a221/" class="text-blue mx-2"><i class="fab fa-linkedin"></i></a>
           <a href="#" class="text-black mx-2"><i class="fab fa-x-twitter"></i></a>
-          <a href="#" class="text-danger mx-2"><i class="fab fa-youtube"></i></a>
+          <a href="https://www.youtube.com/@directorateofindustrialliaison" class="text-danger mx-2"><i class="fab fa-youtube"></i></a>
         </div>
       </div>
     </div>
