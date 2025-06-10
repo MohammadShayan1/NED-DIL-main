@@ -334,7 +334,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ## 🎉 Acknowledgments
 
 - **NED University** for institutional support
-- **Higher Education Commission (HEC)** for Triple Helix initiative
 - **Bootstrap Team** for the excellent UI framework
 - **FontAwesome** for beautiful icons
 - **Google** for analytics and SEO tools
