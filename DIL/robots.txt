@@ -1,0 +1,18 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://dil.neduet.edu.pk/sitemap.xml
+
+# Disallow admin areas
+Disallow: /admin/
+Disallow: /config.php
+Disallow: /assets/uploads/
+
+# Allow important directories
+Allow: /assets/css/
+Allow: /assets/images/
+Allow: /assets/pdfs/
+
+# Crawl delay (optional)
+Crawl-delay: 1

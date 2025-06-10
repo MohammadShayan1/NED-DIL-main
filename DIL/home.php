@@ -1,19 +1,34 @@
 <?php include 'header.php';?>
 <link rel="stylesheet" href="./assets/css/home.css">
-<main>
+
+<!-- Breadcrumb Schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [{
+    "@type": "ListItem",
+    "position": 1,
+    "name": "Home",
+    "item": "https://dil.neduet.edu.pk/"
+  }]
+}
+</script>
+
+<main role="main">
     <!-- Hero Section -->
-    <section class="hero d-flex align-items-center text-center">
+    <section class="hero d-flex align-items-center text-center" aria-label="Welcome to DIL">
       <div class="container">
         <div class="row align-items-center">
           <div class="col-lg-6 col-md-12 text-white">
-            <p class="lead">
+            <p class="lead" role="banner">
               Need Assistance? Discover the Right Opportunities with Us
             </p>
-            <h1 class="fw-bold">
+            <h1 class="fw-bold" id="main-heading">
               WELCOME TO THE <br> DIRECTORATE OF INDUSTRIAL LIAISON (DIL)
             </h1>
-            <a href="About" class="btn btn-dark mt-3 find">
-              FIND OUT MORE <i class="fas fa-play ms-2"></i>
+            <a href="About" class="btn btn-dark mt-3 find" role="button" aria-label="Learn more about DIL">
+              FIND OUT MORE <i class="fas fa-play ms-2" aria-hidden="true"></i>
             </a>
           </div>
           <div class="col-lg-6 col-md-12 mt-4">
@@ -28,49 +43,49 @@
             </p>
           </div>
         </div>
-        <div class="row justify-content-center text-center mt-4" id="hero-boxes-links">
+        <div class="row justify-content-center text-center mt-4" id="hero-boxes-links" role="navigation" aria-label="Quick access links">
         <div class="col-md-3 col-10 m-3 p-0">
-  <a href="./news-events" class="hero-box d-block text-decoration-none p-4">
-    <p class="hero-title"><i class="fa-solid fa-briefcase"></i> CAREER FAIR</p>
-    <p class="hero-link sizefont">FIND OUT MORE <i class="fas fa-play ms-2"></i></p>
+  <a href="./news-events" class="hero-box d-block text-decoration-none p-4" aria-label="Career Fair Information">
+    <h3 class="hero-title"><i class="fa-solid fa-briefcase" aria-hidden="true"></i> CAREER FAIR</h3>
+    <p class="hero-link sizefont">FIND OUT MORE <i class="fas fa-play ms-2" aria-hidden="true"></i></p>
   </a>
 </div>
 <div class="col-md-3 col-10 m-3 p-0">
-  <a href="https://med.neduet.edu.pk/" target="_blank" class="hero-box d-block text-decoration-none p-3">
-    <p class="hero-title">
-      <i class="fa-solid fa-user-graduate"></i> MENTORSHIP
-    </p>
-    <p class="hero-link sizefont">FIND OUT MORE <i class="fas fa-play ms-2"></i></p>
+  <a href="https://med.neduet.edu.pk/" target="_blank" class="hero-box d-block text-decoration-none p-3" aria-label="Mentorship Programs">
+    <h3 class="hero-title">
+      <i class="fa-solid fa-user-graduate" aria-hidden="true"></i> MENTORSHIP
+    </h3>
+    <p class="hero-link sizefont">FIND OUT MORE <i class="fas fa-play ms-2" aria-hidden="true"></i></p>
   </a>
 </div>
 <div class="col-md-3 col-10 m-3 p-0">
-  <a href="./assets/pdfs/FIPP Flyer.pdf" target="_blank" class="hero-box d-block text-decoration-none p-3">
-    <p class="hero-title">
-      <i class="fa-solid fa-building"></i> ONE WINDOW OPERATION (Industry Services)
-    </p>
-    <p class="hero-link sizefont">FIND OUT MORE <i class="fas fa-play ms-2 "></i></p>
+  <a href="./assets/pdfs/FIPP Flyer.pdf" target="_blank" class="hero-box d-block text-decoration-none p-3" aria-label="One Window Operation Industry Services">
+    <h3 class="hero-title">
+      <i class="fa-solid fa-building" aria-hidden="true"></i> ONE WINDOW OPERATION (Industry Services)
+    </h3>
+    <p class="hero-link sizefont">FIND OUT MORE <i class="fas fa-play ms-2" aria-hidden="true"></i></p>
   </a>
 </div>
 <div class="col-md-3 col-10 m-3 p-0">
-  <a href="./news-events" class="hero-box d-block text-decoration-none p-4">
-    <p class="hero-title"><i class="fa-solid fa-newspaper"></i> News and Events</p>
-    <p class="hero-link sizefont">FIND OUT MORE <i class="fas fa-play ms-2 "></i></p>
+  <a href="./news-events" class="hero-box d-block text-decoration-none p-4" aria-label="News and Events">
+    <h3 class="hero-title"><i class="fa-solid fa-newspaper" aria-hidden="true"></i> News and Events</h3>
+    <p class="hero-link sizefont">FIND OUT MORE <i class="fas fa-play ms-2" aria-hidden="true"></i></p>
   </a>
 </div>
 <div class="col-md-3 col-10 m-3 p-0">
-  <a href="./assets/pdfs/Coop Prog Flyer.pdf" target="_blank" class="hero-box d-block text-decoration-none p-3">
-    <p class="hero-title">
-      <i class="fa-solid fa-handshake"></i> Cooperative Education Program (CO-OP)
-    </p>
-    <p class="hero-link sizefont">FIND OUT MORE <i class="fas fa-play ms-2 "></i></p>
+  <a href="./assets/pdfs/Coop Prog Flyer.pdf" target="_blank" class="hero-box d-block text-decoration-none p-3" aria-label="Cooperative Education Program">
+    <h3 class="hero-title">
+      <i class="fa-solid fa-handshake" aria-hidden="true"></i> Cooperative Education Program (CO-OP)
+    </h3>
+    <p class="hero-link sizefont">FIND OUT MORE <i class="fas fa-play ms-2" aria-hidden="true"></i></p>
   </a>
 </div>
 <div class="col-md-3 col-10 m-3 p-0">
-  <a href="./assets/pdfs/FIPP Flyer.pdf" target="_blank" class="hero-box d-block text-decoration-none p-3">
-    <p class="hero-title">
-      <i class="fa-solid fa-chalkboard-teacher"></i> Faculty Industrial Placement Program (FIPP)
-    </p>
-    <p class="hero-link sizefont">FIND OUT MORE <i class="fas fa-play ms-2 "></i></p>
+  <a href="./assets/pdfs/FIPP Flyer.pdf" target="_blank" class="hero-box d-block text-decoration-none p-3" aria-label="Faculty Industrial Placement Program">
+    <h3 class="hero-title">
+      <i class="fa-solid fa-chalkboard-teacher" aria-hidden="true"></i> Faculty Industrial Placement Program (FIPP)
+    </h3>
+    <p class="hero-link sizefont">FIND OUT MORE <i class="fas fa-play ms-2" aria-hidden="true"></i></p>
   </a>
 </div>
 

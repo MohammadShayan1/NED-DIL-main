@@ -4,6 +4,11 @@
 $requestURI = trim($_SERVER['REQUEST_URI'], '/');
 $segments = explode('/', $requestURI);
 $currentPage = isset($segments[0]) && $segments[0] !== '' ? $segments[0] : 'Home'; // default to Home if empty
+
+// Include SEO configuration
+require_once 'seo-config.php';
+require_once 'analytics-seo.php';
+require_once 'local-social-seo.php';
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -11,7 +16,24 @@ $currentPage = isset($segments[0]) && $segments[0] !== '' ? $segments[0] : 'Home
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Directorate of Industrial Liaison (DIL)</title>
+  
+  <?php echo SEOManager::generateMetaTags($currentPage); ?>
+  
+  <?php echo addGoogleAnalytics(); ?>
+  <?php echo addPerformanceOptimizations(); ?>
+  <?php echo addLdJsonOrganization(); ?>
+  <?php echo LocalSEO::generateLocalBusinessSchema(); ?>
+  <?php echo MobileOptimization::generateMobileMeta(); ?>
+  <?php echo MobileOptimization::generateCriticalCSS(); ?>
+  <!-- Preload critical resources -->
+  <link rel="preload" href="./assets/css/style.css" as="style">
+  <link rel="preload" href="./assets/images/heroimg.png" as="image">
+  <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" as="style">
+  
+  <!-- DNS Prefetch for external resources -->
+  <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+  <link rel="dns-prefetch" href="//cdn.jsdelivr.net">
+  
   <link rel="icon" type="image/png" href="./assets/favicon/favicon-96x96.png" sizes="96x96" />
 <link rel="icon" type="image/svg+xml" href="./assets/favicon/favicon.svg" />
 <link rel="shortcut icon" href="./assets/favicon/favicon.ico" />

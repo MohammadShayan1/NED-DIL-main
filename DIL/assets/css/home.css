@@ -14,7 +14,8 @@ body {
     justify-content: center;
     align-items: center;
     color: #fff;
-    padding: 3rem 0;
+    padding: 4rem 2rem;
+    margin: 0;
 }
 
 .hero p {
@@ -44,7 +45,8 @@ body {
     justify-content: center;
     align-items: center;
     text-align: center;
-    padding: 5rem 0;
+    padding: 6rem 2rem;
+    margin: 0;
 }
 
 .mission h3 {
@@ -67,10 +69,40 @@ body {
 }
 
 /* Responsive Design */
-@media (max-width: 992px) {
+
+/* Extra Large Devices (Large Desktops, 1200px and up) */
+@media (min-width: 1200px) {
+    .hero {
+        padding: 5rem 3rem;
+    }
+    .mission {
+        padding: 7rem 3rem;
+    }
+    .hero-box {
+        margin: 1rem;
+        padding: 2rem;
+    }
+}
+
+/* Large Devices (Desktops, 992px and up) */
+@media (max-width: 1199px) and (min-width: 992px) {
+    .hero {
+        padding: 4rem 2.5rem;
+    }
+    .mission {
+        padding: 6rem 2.5rem;
+    }
+    .hero-box {
+        margin: 0.8rem;
+        padding: 1.8rem;
+    }
+}
+
+/* Medium Devices (Tablets, 768px and up) */
+@media (max-width: 991px) and (min-width: 768px) {
     .hero {
         height: auto;
-        padding: 4rem 2rem;
+        padding: 3rem 2rem;
     }
     .hero h1 {
         font-size: 2rem;
@@ -78,15 +110,34 @@ body {
     .hero p {
         font-size: 1.1rem;
     }
+    .mission {
+        padding: 4rem 2rem;
+    }
+    .mission h3 {
+        font-size: 2rem;
+    }
+    .hero-box {
+        margin: 0.7rem;
+        padding: 1.5rem;
+        height: 140px;
+    }
 }
 
-@media (max-width: 768px) {
+/* Small Devices (Landscape Phones, 576px and up) */
+@media (max-width: 767px) and (min-width: 576px) {
     .hero {
         text-align: center;
-        padding: 3rem 1rem;
+        padding: 2.5rem 1.5rem;
+        height: auto;
+    }
+    .hero h1 {
+        font-size: 1.8rem;
+    }
+    .hero p {
+        font-size: 1rem;
     }
     .mission {
-        padding: 3rem 1rem;
+        padding: 3rem 1.5rem;
     }
     .mission h3 {
         font-size: 1.8rem;
@@ -97,6 +148,59 @@ body {
     .mission p {
         font-size: 1rem;
         max-width: 90%;
+    }
+    .hero-box {
+        margin: 0.5rem auto;
+        padding: 1.2rem;
+        width: 90%;
+        height: auto;
+        min-height: 120px;
+    }
+}
+
+/* Extra Small Devices (Portrait Phones, less than 576px) */
+@media (max-width: 575px) {
+    .hero {
+        text-align: center;
+        padding: 2rem 1rem;
+        height: auto;
+    }
+    .hero h1 {
+        font-size: 1.5rem;
+        line-height: 1.3;
+    }
+    .hero p {
+        font-size: 0.9rem;
+        margin-bottom: 1rem;
+    }
+    .mission {
+        padding: 2.5rem 1rem;
+    }
+    .mission h3 {
+        font-size: 1.5rem;
+        line-height: 1.3;
+    }
+    .mission h4 {
+        font-size: 1.3rem;
+    }
+    .mission p {
+        font-size: 0.9rem;
+        max-width: 95%;
+        line-height: 1.5;
+    }
+    .hero-box {
+        margin: 0.3rem auto;
+        padding: 1rem;
+        width: 95%;
+        height: auto;
+        min-height: 100px;
+    }
+    .hero-title {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+    }
+    .hero-link {
+        font-size: 0.8rem !important;
     }
 }
 
@@ -151,12 +255,30 @@ body {
     font-size: 0.9rem;
 } */
 
-/* Responsive Adjustments */
+/* Responsive Adjustments for Hero Boxes */
 @media (max-width: 768px) {
     .hero-box {
-        width: 90%; /* Ensures proper sizing on mobile */
-        padding: 20px;
-        height: auto; /* Adjust height for smaller screens */
+        width: 90%;
+        padding: 1.2rem;
+        height: auto;
+        min-height: 120px;
+        margin: 0.5rem auto;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-box {
+        width: 95%;
+        padding: 1rem;
+        height: auto;
+        min-height: 100px;
+        margin: 0.3rem auto;
+    }
+    .hero-title {
+        font-size: 1rem;
+    }
+    .hero-link {
+        font-size: 0.8rem !important;
     }
 }
 
