@@ -3,7 +3,7 @@ include 'header.php';
 require_once "config.php"; // Database connection
 
 // Fetch all employees' data
-$sql = "SELECT * FROM Employees ORDER BY position";
+$sql = "SELECT * FROM employees ORDER BY position";
 $stmt = $conn->prepare($sql);
 $stmt->execute();
 $result = $stmt->get_result();
@@ -142,7 +142,7 @@ $result = $stmt->get_result();
           <div class="row align-items-center text-center my-4 bg-light shadow-sm p-3 rounded">
               <div class="col-md-3">
                   <h5 class="fw-semibold"><?= htmlspecialchars($row['name']); ?></h5>
-                  <p class="text-muted m-0"><?= htmlspecialchars($row['email']); ?></p>
+                  <p class="text-muted m-0"><?= $row['email'] ? htmlspecialchars($row['email']) : ''; ?></p>
               </div>
               <div class="col-md-3">
                   <p class="fw-medium text-dark"><?= htmlspecialchars($row['designation']); ?></p>

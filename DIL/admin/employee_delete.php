@@ -4,7 +4,7 @@ include 'config.php';
 $id = $_GET['id'];
 
 // Step 1: Get the file path from the database
-$query = "SELECT file_path FROM Employees WHERE id=?";
+$query = "SELECT image_path FROM employees WHERE id=?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $id);
 $stmt->execute();
@@ -18,7 +18,7 @@ if ($file_path && file_exists($file_path)) {
 }
 
 // Step 3: Delete the database record
-$query = "DELETE FROM Employees WHERE id=?";
+$query = "DELETE FROM employees WHERE id=?";
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $id);
 $stmt->execute();

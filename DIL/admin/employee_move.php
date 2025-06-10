@@ -17,7 +17,7 @@ $employee_id = intval($_GET['id']);
 $direction = $_GET['direction'];
 
 // Fetch the current employee details
-$sql = "SELECT id, position FROM Employees WHERE id = ?";
+$sql = "SELECT id, position FROM employees WHERE id = ?";
 $stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $employee_id);
 $stmt->execute();
@@ -32,10 +32,10 @@ $current_position = $employee['position'];
 
 if ($direction === 'up') {
     // Find the employee just above the current one
-    $sql = "SELECT id, position FROM Employees WHERE position < ? ORDER BY position DESC LIMIT 1";
+    $sql = "SELECT id, position FROM employees WHERE position < ? ORDER BY position DESC LIMIT 1";
 } elseif ($direction === 'down') {
     // Find the employee just below the current one
-    $sql = "SELECT id, position FROM Employees WHERE position > ? ORDER BY position ASC LIMIT 1";
+    $sql = "SELECT id, position FROM employees WHERE position > ? ORDER BY position ASC LIMIT 1";
 } else {
     die("Invalid direction.");
 }
@@ -57,13 +57,13 @@ $conn->begin_transaction();
 
 try {
     // Update the swapped employee's position
-    $sql = "UPDATE Employees SET position = ? WHERE id = ?";
+    $sql = "UPDATE employees SET position = ? WHERE id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ii", $current_position, $swap_employee['id']);
     $stmt->execute();
 
     // Update the current employee's position
-    $sql = "UPDATE Employees SET position = ? WHERE id = ?";
+    $sql = "UPDATE employees SET position = ? WHERE id = ?";
     $stmt = $conn->prepare($sql);
     $stmt->bind_param("ii", $swap_employee['position'], $employee_id);
     $stmt->execute();
