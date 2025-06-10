@@ -16,6 +16,11 @@ if (!isset($_GET['id'], $_GET['direction'])) {
 $employee_id = intval($_GET['id']);
 $direction = $_GET['direction'];
 
+// Validate direction parameter
+if (!in_array($direction, ['up', 'down'])) {
+    die("Invalid direction.");
+}
+
 // Fetch the current employee details
 $sql = "SELECT id, position FROM employees WHERE id = ?";
 $stmt = $conn->prepare($sql);
@@ -48,7 +53,7 @@ $swap_employee = $result->fetch_assoc();
 
 if (!$swap_employee) {
     // No employee to swap with (first or last position)
-    header("Location: team_management.php");
+    header("Location: team-management.php");
     exit();
 }
 
@@ -59,14 +64,24 @@ try {
     // Update the swapped employee's position
     $sql = "UPDATE employees SET position = ? WHERE id = ?";
     $stmt = $conn->prepare($sql);
+    if (!$stmt) {
+        throw new Exception("Failed to prepare statement: " . $conn->error);
+    }
     $stmt->bind_param("ii", $current_position, $swap_employee['id']);
-    $stmt->execute();
+    if (!$stmt->execute()) {
+        throw new Exception("Failed to update swapped employee: " . $stmt->error);
+    }
 
     // Update the current employee's position
     $sql = "UPDATE employees SET position = ? WHERE id = ?";
     $stmt = $conn->prepare($sql);
+    if (!$stmt) {
+        throw new Exception("Failed to prepare statement: " . $conn->error);
+    }
     $stmt->bind_param("ii", $swap_employee['position'], $employee_id);
-    $stmt->execute();
+    if (!$stmt->execute()) {
+        throw new Exception("Failed to update current employee: " . $stmt->error);
+    }
 
     $conn->commit();
 } catch (Exception $e) {
@@ -75,6 +90,6 @@ try {
 }
 
 // Redirect back
-header("Location: team_management.php");
+header("Location: team-management.php");
 exit();
 ?>

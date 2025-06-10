@@ -64,12 +64,12 @@ require_once 'local-social-seo.php';
         class="container d-flex flex-wrap justify-content-between align-items-center">
         <p
           class="text-white mb-2 mb-md-0 text-center text-md-start flex-grow-1">
-          Directorate of Industrial Liaison (DIL) || <span style="color:#d6f402;"> “Collaborate, Innovate, Transform”</span>
+          Directorate of Industrial Liaison (DIL) || <span style="color:#d6f402;"> <i>“Collaborate, Innovate, Transform”</i></span>
         </p>
         <div class="social-icons d-flex">
-          <a href="#" class="text-white mx-2"><i class="fab fa-linkedin"></i></a>
-          <a href="#" class="text-white mx-2"><i class="fab fa-x-twitter"></i></a>
-          <a href="#" class="text-white mx-2"><i class="fab fa-youtube"></i></a>
+          <a href="#" class="text-blue mx-2"><i class="fab fa-linkedin"></i></a>
+          <a href="#" class="text-black mx-2"><i class="fab fa-x-twitter"></i></a>
+          <a href="#" class="text-danger mx-2"><i class="fab fa-youtube"></i></a>
         </div>
       </div>
     </div>

@@ -81,7 +81,7 @@ if ($result === false) {
             <?php while ($row = $result->fetch_assoc()): ?>
                 <tr>
                     <td><?= htmlspecialchars($row['name']) ?></td>
-                    <td><?= htmlspecialchars($row['email']) ?></td>
+                    <td><?= htmlspecialchars($row['email'] ?? '') ?></td>
                     <td><?= htmlspecialchars($row['designation']) ?></td>
                     <td><?= htmlspecialchars($row['office_number'] ) ?></td>
                     <td><img src="<?= htmlspecialchars($row['image_path']) ?>" width="50" height="50" class="rounded-circle"></td>
