@@ -40,7 +40,7 @@ if ($result === false) {
         </div>
 
     <!-- Add Employee Form -->
-    <form action="employee_add" method="POST" enctype="multipart/form-data" class="mb-4 p-3 border rounded bg-light">
+    <form action="employee_add.php" method="POST" enctype="multipart/form-data" class="mb-4 p-3 border rounded bg-light">
         <h4>Add Employee</h4>
         <div class="mb-3">
             <label>Name</label>
@@ -86,10 +86,10 @@ if ($result === false) {
                     <td><?= htmlspecialchars($row['office_number'] ) ?></td>
                     <td><img src="<?= htmlspecialchars($row['image_path']) ?>" width="50" height="50" class="rounded-circle"></td>
                     <td>
-                        <a href="employee_edit?id=<?= $row['id'] ?>" class="btn btn-primary btn-sm">Edit</a>
-                        <a href="employee_delete?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm">Delete</a>
-                        <a href="employee_move?id=<?= $row['id'] ?>&direction=up" class="btn btn-secondary btn-sm">⬆</a>
-                        <a href="employee_move?id=<?= $row['id'] ?>&direction=down" class="btn btn-secondary btn-sm">⬇</a>
+                        <a href="employee_edit.php?id=<?= $row['id'] ?>" class="btn btn-primary btn-sm">Edit</a>
+                        <a href="employee_delete.php?id=<?= $row['id'] ?>" class="btn btn-danger btn-sm">Delete</a>
+                        <a href="employee_move.php?id=<?= $row['id'] ?>&direction=up" class="btn btn-secondary btn-sm">⬆</a>
+                        <a href="employee_move.php?id=<?= $row['id'] ?>&direction=down" class="btn btn-secondary btn-sm">⬇</a>
                     </td>
                 </tr>
             <?php endwhile; ?>

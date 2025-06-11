@@ -29,6 +29,12 @@ $_SESSION['last_activity'] = time();
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NED DIL | Admin Dashboard</title>
+  <link rel="icon" type="image/png" href="../assets/favicon/favicon-96x96.png" sizes="96x96" />
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon/favicon.svg" />
+  <link rel="shortcut icon" href="../assets/favicon/favicon.ico" />
+  <link rel="apple-touch-icon" sizes="180x180" href="../assets/favicon/apple-touch-icon.png" />
+  <meta name="apple-mobile-web-app-title" content="Directorate Of Industrial Liaison" />
+  <link rel="manifest" href="../assets/favicon/site.webmanifest" />
   <!-- Bootstrap CSS -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
@@ -79,9 +85,9 @@ $_SESSION['last_activity'] = time();
       <a href="index.php" class="<?= ($activePage == 'index') ? 'active' : '' ?>">🏠 Dashboard</a>
     <a href="team-management.php" class="<?= ($activePage == 'team-management') ? 'active' : '' ?>">👥 Team Management</a>
     <a href="form.php" disabled>📝 Manage Forms</a>
-    <a href="internship.php" class="<?= ($activePage == 'internship') ? 'active' : '' ?>">🎓 Internship Table</a>
-    <a href="job.php" class="<?= ($activePage == 'job') ? 'active' : '' ?>">💼 Job Table</a>
-    <a href="industrialcollaboration.php" class="<?= ($activePage == 'industrialcollaboration') ? 'active' : '' ?>">🏭 Industrial Collaboration</a>
-    <a href="newsletter.php" class="<?= ($activePage == 'Newsletter') ? 'active' : '' ?>"> 📰 Newsletters</a>
+    <a href="Internship.php" class="<?= ($activePage == 'Internship') ? 'active' : '' ?>">🎓 Internship Table</a>
+    <a href="Job.php" class="<?= ($activePage == 'Job') ? 'active' : '' ?>">💼 Job Table</a>
+    <a href="Industrialcollaboration.php" class="<?= ($activePage == 'Industrialcollaboration') ? 'active' : '' ?>">🏭 Industrial Collaboration</a>
+    <a href="newsletter.php" class="<?= ($activePage == 'newsletter') ? 'active' : '' ?>"> 📰 Newsletters</a>
     <a href="logout.php" class="bg-danger text-white">🚪 Logout</a>
   </div>

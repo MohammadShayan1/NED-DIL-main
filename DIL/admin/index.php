@@ -120,14 +120,6 @@ $recent_jobs_fresh = getRecentRecords($conn, 'job_openings_fresh', 'title, compa
 $recent_jobs_experienced = getRecentRecords($conn, 'job_openings_experienced', 'title, company, created_at', 2);
 $recent_newsletters = getRecentRecords($conn, 'newsletters', 'title, created_at', 3);
 
-// Website analytics (mock data - replace with actual analytics)
-$analytics = [
-    'total_visits' => 12450,
-    'monthly_visits' => 3240,
-    'bounce_rate' => 32.5,
-    'avg_session' => '3:24'
-];
-
 // Check database table status
 $required_tables = ['employees', 'internship_programs', 'job_openings_fresh', 'job_openings_experienced', 'newsletters', 'admin_users'];
 $missing_tables = [];
@@ -279,51 +271,6 @@ $database_status = empty($missing_tables) ? 'complete' : 'incomplete';
             </div>
         </div>
     </div>
-
-    <!-- Website Analytics -->
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="card border-0 shadow-sm">
-                <div class="card-header bg-transparent border-0 pb-0">
-                    <h5 class="card-title mb-0">
-                        <i class="fas fa-chart-line me-2 text-primary"></i>Website Analytics
-                    </h5>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-3 text-center mb-3">
-                            <div class="border-end">
-                                <h4 class="text-primary mb-1"><?php echo number_format($analytics['total_visits']); ?></h4>
-                                <small class="text-muted">Total Visits</small>
-                            </div>
-                        </div>
-                        <div class="col-md-3 text-center mb-3">
-                            <div class="border-end">
-                                <h4 class="text-success mb-1"><?php echo number_format($analytics['monthly_visits']); ?></h4>
-                                <small class="text-muted">This Month</small>
-                            </div>
-                        </div>
-                        <div class="col-md-3 text-center mb-3">
-                            <div class="border-end">
-                                <h4 class="text-warning mb-1"><?php echo $analytics['bounce_rate']; ?>%</h4>
-                                <small class="text-muted">Bounce Rate</small>
-                            </div>
-                        </div>
-                        <div class="col-md-3 text-center mb-3">
-                            <h4 class="text-info mb-1"><?php echo $analytics['avg_session']; ?></h4>
-                            <small class="text-muted">Avg. Session</small>
-                        </div>
-                    </div>
-                    <div class="mt-3">
-                        <a href="../seo-dashboard.html" class="btn btn-sm btn-primary" target="_blank">
-                            <i class="fas fa-external-link-alt me-1"></i>View SEO Dashboard
-                        </a>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
     <!-- Recent Activities -->
     <div class="row">
         <!-- Recent Internships -->

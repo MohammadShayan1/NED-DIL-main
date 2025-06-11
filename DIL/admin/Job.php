@@ -85,6 +85,7 @@ $jobs_experienced = $conn->query("SELECT * FROM job_openings_experienced ORDER B
 ?>
 
 <div class="main-content">
+    <h3>Job Openings</h3>
     <?php if (isset($_GET['message'])): ?>
         <div class="alert alert-info"><?php echo htmlspecialchars($_GET['message']); ?></div>
     <?php endif; ?>
@@ -99,8 +100,6 @@ $jobs_experienced = $conn->query("SELECT * FROM job_openings_experienced ORDER B
     <div class="tab-content mt-3">
         <!-- View Jobs -->
         <div class="tab-pane fade <?php echo ($activeTab=='view') ? 'show active' : ''; ?>" id="view">
-            <h3>Job Openings</h3>
-
             <h4>Fresh Graduates</h4>
             <table class="table table-bordered">
                 <tr><th>ID</th><th>Title</th><th>Date</th><th>File</th><th>Actions</th></tr>

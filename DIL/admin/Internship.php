@@ -113,6 +113,7 @@ $result = $conn->query("SELECT * FROM internship_programs ORDER BY issue_date AS
 ?>
 
 <div class="main-content">
+  <h2>Internships</h2>
 <?php if ($message != ''): ?>
   <div class="alert alert-info"><?php echo $message; ?></div>
 <?php endif; ?>

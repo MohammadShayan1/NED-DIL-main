@@ -108,6 +108,7 @@ $result = $conn->query("SELECT * FROM industrial_collaboration ORDER BY issue_da
 ?>
 
 <div class="main-content">
+  <h2>Industrial Collaboration</h2>
 <?php if ($message): ?>
   <div class="alert alert-info"><?php echo $message; ?></div>
 <?php endif; ?>

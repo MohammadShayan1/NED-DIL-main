@@ -88,6 +88,7 @@ $result = $conn->query("SELECT * FROM Forms");
 ?>
 
 <div class="main-content">
+  <h2>Downloads</h2>
 <?php if ($message != ''): ?>
 <div class="alert alert-info"><?php echo $message; ?></div>
 <?php endif; ?>

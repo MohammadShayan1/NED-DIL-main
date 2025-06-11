@@ -137,6 +137,7 @@ $result = $conn->query("SELECT * FROM Newsletters ORDER BY issue_date ASC");
 ?>
 
 <div class="main-content">
+  <h2>Newsletters</h2>
   <?php if ($message != ''): ?>
       <div class="alert alert-info"><?php echo $message; ?></div>
   <?php endif; ?>
