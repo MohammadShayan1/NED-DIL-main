@@ -12,22 +12,22 @@ $result = $conn->query($sql);
  <section>
 <div class="hero-img">
     <div class="container text-center">
-        <h1 class="fw-bold mb-4 box-color-light p-3 rounded">PATH WAY TO OPPORTUNITIES</h1>
+        <h1 class="fw-bold mb-4 box-color-light p-3 rounded" data-aos="zoom-in" data-aos-duration="800">PATH WAY TO OPPORTUNITIES</h1>
         <!-- Forms Section -->
         <div class="row mt-4 justify-content-center">
-            <div class="col-md-3 mx-2">
+            <div class="col-md-3 mx-2" data-aos="fade-up" data-aos-delay="100">
                 <div class="card box-color-light text-center p-3">
                     <p class="fw-bold">SELF INTERNSHIP APPLICATION FORM</p>
                     <a href="./assets/pdfs/Self Internships Application Form.pdf" class="btn btn-dark fw-bold" target="_blank">DOWNLOAD</a>
                 </div>
             </div>
-            <div class="col-md-3 mx-2">
+            <div class="col-md-3 mx-2" data-aos="fade-up" data-aos-delay="200">
                 <div class="card box-color-light text-center p-3">
                     <p class="fw-bold">INTERNSHIP FEEDBACK FORM</p>
                     <a href="./assets/pdfs/Internship Feedback Form.pdf" class="btn btn-dark fw-bold" target="_blank">DOWNLOAD</a>
                 </div>
             </div>
-            <div class="col-md-3 mx-2">
+            <div class="col-md-3 mx-2" data-aos="fade-up" data-aos-delay="300">
                 <div class="card box-color-light text-center p-3">
                     <p class="fw-bold">INTERNEE INTERNSHIP FEEDBACK FORM</p>
                     <a href="./assets/pdfs/Internship Feedback Form.pdf" class="btn btn-dark fw-bold" target="_blank">DOWNLOAD</a>
@@ -35,19 +35,19 @@ $result = $conn->query($sql);
             </div>
         </div>
         <div class="row mt-4 justify-content-center">
-            <div class="col-md-3 mx-2">
+            <div class="col-md-3 mx-2" data-aos="fade-up" data-aos-delay="400">
                 <div class="card box-color-light text-center p-3">
                     <p class="fw-bold">Internship Notice Board</p>
                     <a href="https://pl.neduet.edu.pk/notices/DIL_Notices.jsp" class="btn btn-dark fw-bold" target="_blank">DOWNLOAD</a>
                 </div>
             </div>
-            <div class="col-md-3 mx-2">
+            <div class="col-md-3 mx-2" data-aos="fade-up" data-aos-delay="500">
                 <div class="card box-color-light text-center p-3">
                     <p class="fw-bold">Process Flow</p>
                     <a href="./assets/pdfs/Process Flow.pdf" class="btn btn-dark fw-bold" target="_blank">DOWNLOAD</a>
                 </div>
             </div>
-            <div class="col-md-3 mx-2">
+            <div class="col-md-3 mx-2" data-aos="fade-up" data-aos-delay="600">
                 <div class="card box-color-light text-center p-3">
                     <p class="fw-bold">Industry Invitation Letter</p>
                     <a href="./assets/pdfs/Industry Invitation Letter.pdf" class="btn btn-dark fw-bold" target="_blank">DOWNLOAD</a>

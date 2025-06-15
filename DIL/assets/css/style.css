@@ -209,3 +209,7 @@ nav .container {
   z-index: 1050; /* Ensure it appears above other elements */
   position: absolute !important; /* Ensure it doesn't expand navbar */
 }
+
+.yellowcolor {
+  color: #d6f402 !important;
+}

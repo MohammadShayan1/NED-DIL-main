@@ -1,4 +1,4 @@
-<footer class="text-white py-4" style="background-color: #073470;">
+<footer class="text-white py-4" style="background-color: #073470;" data-aos="fade-up" data-aos-duration="600">
   <div class="container">
     <div class="row">
       <div class="col text-center">

@@ -49,21 +49,21 @@ $result_experienced = $conn->query($sql_experienced);
 <section>
 <div class="hero-img">
     <div class="container text-center">
-        <h1 class="fw-bold mb-4 box-color-light p-3 rounded">PATH WAY TO OPPORTUNITIES</h1>
+        <h1 class="fw-bold mb-4 box-color-light p-3 rounded" data-aos="zoom-in" data-aos-duration="800">PATH WAY TO OPPORTUNITIES</h1>
         <div class="row mt-4 justify-content-center">
-            <div class="col-md-3 mx-2">
+            <div class="col-md-3 mx-2" data-aos="fade-up" data-aos-delay="100">
                 <div class="card box-color-light text-center p-3">
                     <p class="fw-bold">Industry Invitation Letter</p>
                     <a href="./assets/pdfs/Industry Invitation Letter.pdf" class="btn btn-dark fw-bold" target="_blank">DOWNLOAD</a>
                 </div>
             </div>
-            <div class="col-md-3 mx-2">
+            <div class="col-md-3 mx-2" data-aos="fade-up" data-aos-delay="200">
                 <div class="card box-color-light text-center p-3">
                     <p class="fw-bold">Industry Invitation Letter</p>
                     <a href="./assets/pdfs/Industry Invitation Letter.pdf" class="btn btn-dark fw-bold" target="_blank">DOWNLOAD</a>
                 </div>
             </div>
-            <div class="col-md-3 mx-2">
+            <div class="col-md-3 mx-2" data-aos="fade-up" data-aos-delay="300">
                 <div class="card box-color-light text-center p-3">
                     <p class="fw-bold">DIL Notice Board</p>
                     <a href="./assets/pdfs/Experienced Job Form (For Companies).pdf" class="btn btn-dark fw-bold" target="_blank">OPEN</a>
@@ -77,12 +77,12 @@ $result_experienced = $conn->query($sql_experienced);
 <section>
 <div class="container mt-4">
     <div class="row text-center">
-        <h1 class="mb-4">JOB OPENINGS</h1>
+        <h1 class="mb-4" data-aos="fade-down" data-aos-duration="800">JOB OPENINGS</h1>
     </div>
 
     <!-- Fresh Graduates -->
-    <h2 class="mb-3">JOB OPENINGS FOR FRESH GRADUATES</h2>
-    <table class="table table-bordered table-striped">
+    <h2 class="mb-3" data-aos="slide-right" data-aos-duration="800">JOB OPENINGS FOR FRESH GRADUATES</h2>
+    <table class="table table-bordered table-striped" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
         <thead class="text-center">
             <tr>
                 <th style="background-color: #073470; color: white;">Job Title</th>

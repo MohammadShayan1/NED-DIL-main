@@ -41,9 +41,9 @@ if ($result->num_rows > 0) {
 <section>
 <div class="container mt-4">
     <div class="row text-center">
-        <h1 class="mb-4">Downloads</h1>
+        <h1 class="mb-4" data-aos="fade-down" data-aos-duration="800">Downloads</h1>
     </div>
-    <div class="table-responsive">
+    <div class="table-responsive" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
         <table class="table table-bordered text-center align-middle">
             <thead>
                 <tr>

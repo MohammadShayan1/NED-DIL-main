@@ -51,6 +51,9 @@ require_once 'local-social-seo.php';
     href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
     rel="stylesheet" />
 
+  <!-- AOS (Animate On Scroll) CSS -->
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
   <!-- Custom CSS -->
   <link rel="stylesheet" href="./assets/css/style.css" />
   <link rel="stylesheet" href="./assets/css/footer.css" />
@@ -144,7 +147,7 @@ require_once 'local-social-seo.php';
       </div>
     </div>
 
-    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar sticky-top">
+    <nav class="navbar navbar-expand-lg navbar-dark custom-navbar sticky-top" data-aos="fade-down" data-aos-duration="800" data-aos-delay="100">
     <div class="container">
         <!-- Navbar Toggler -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -199,7 +202,22 @@ require_once 'local-social-seo.php';
 
 
 </header>
+
+<!-- AOS (Animate On Scroll) JavaScript -->
+<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
 <script>
+  // Initialize AOS
+  AOS.init({
+    duration: 1000, // Animation duration in milliseconds
+    easing: 'ease-in-out', // Easing function
+    once: true, // Whether animation should happen only once
+    mirror: false, // Whether elements should animate out while scrolling past them
+    offset: 100, // Offset (in px) from the original trigger point
+    delay: 100, // Delay animation (in milliseconds)
+  });
+
+  // Navbar dropdown functionality
   document.addEventListener("click", function (event) {
     let dropdowns = document.querySelectorAll(".dropdown-menu");
     dropdowns.forEach((dropdown) => {

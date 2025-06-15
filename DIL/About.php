@@ -15,8 +15,8 @@ $result = $stmt->get_result();
 <section class="mission">
   <div class="container text-center">
     <!-- Heading & Image Inline -->
-    <div class="d-flex align-items-center justify-content-center gap-3 mb-4">
-      <h3 class="fw-bold mb-0">“Collaborate, Innovate, Transform”</h3>
+    <div class="d-flex align-items-center justify-content-center gap-3 mb-4" data-aos="zoom-in" data-aos-duration="800">
+      <h3 class="fw-bold mb-0 yellowcolor"><i>“Collaborate, Innovate, Transform”</i></h3>
       <img src="./assets/images/Asset 1.png" alt="" style="max-height: 50px;">
     </div>
 
@@ -49,11 +49,11 @@ $result = $stmt->get_result();
 
 <!-- Activities Section -->
 <section class="container py-5">
-  <h2 class="fw-bold text-center mb-4">Our Key Activities</h2>
+  <h2 class="fw-bold text-center mb-4" data-aos="fade-up" data-aos-duration="800">Our Key Activities</h2>
   <div class="row g-4">
 
     <!-- Industrial Visits -->
-    <div class="col-md-4">
+    <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
       <div class="card h-100 shadow-sm p-3">
         <h5 class="fw-bold"><i class="fas fa-industry me-2" style="color: #d6f402;"></i> Industrial Visits</h5>
         <p>Organizing study visits for students and faculty to provide real-world exposure in various industries and organizations.</p>
@@ -61,7 +61,7 @@ $result = $stmt->get_result();
     </div>
 
     <!-- Internships & Co-op -->
-    <div class="col-md-4">
+    <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
       <div class="card h-100 shadow-sm p-3">
         <h5 class="fw-bold"><i class="fas fa-briefcase me-2" style="color: #d6f402;"></i> Internships & Co-op Education</h5>
         <p>Arranging internship opportunities from the first year to final year, with potential for long-term placement through performance-based continuation.</p>
@@ -69,7 +69,7 @@ $result = $stmt->get_result();
     </div>
 
     <!-- FYDP -->
-    <div class="col-md-4">
+    <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
       <div class="card h-100 shadow-sm p-3">
         <h5 class="fw-bold"><i class="fas fa-project-diagram me-2" style="color: #d6f402;"></i> Final Year Design Projects (FYDPs)</h5>
         <p>Facilitating industry-driven final year projects with technical and practical support to ensure impactful student outcomes.</p>
@@ -77,7 +77,7 @@ $result = $stmt->get_result();
     </div>
 
     <!-- Job Placement -->
-    <div class="col-md-4">
+    <div class="col-md-4" data-aos="fade-up" data-aos-delay="400">
       <div class="card h-100 shadow-sm p-3">
         <h5 class="fw-bold"><i class="fas fa-user-tie me-2" style="color: #d6f402;"></i> Job Placement</h5>
         <p>Supporting employers with on-campus drives, career fairs, graduate directories, and online job portals to connect with skilled graduates.</p>
@@ -85,7 +85,7 @@ $result = $stmt->get_result();
     </div>
 
     <!-- Mentorship -->
-    <div class="col-md-4">
+    <div class="col-md-4" data-aos="fade-up" data-aos-delay="500">
       <div class="card h-100 shadow-sm p-3">
         <h5 class="fw-bold"><i class="fas fa-chalkboard-teacher me-2" style="color: #d6f402;"></i> Mentorship & Career Counseling</h5>
         <p>Organizing mentoring sessions and career counseling to guide students in shaping their professional journey.</p>
@@ -93,7 +93,7 @@ $result = $stmt->get_result();
     </div>
 
     <!-- Exhibitions -->
-    <div class="col-md-4">
+    <div class="col-md-4" data-aos="fade-up" data-aos-delay="600">
       <div class="card h-100 shadow-sm p-3">
         <h5 class="fw-bold"><i class="fas fa-lightbulb me-2" style="color: #d6f402;"></i> Exhibitions</h5>
         <p>Encouraging students to showcase their projects and innovations at professional fairs, expos, and technical shows.</p>
@@ -102,7 +102,7 @@ $result = $stmt->get_result();
 
     <!-- Faculty Industrial Placement -->
     <div class="col-md-6">
-      <div class="card h-100 shadow-sm p-3">
+      <div class="card h-100 shadow-sm p-3" data-aos="fade-up" data-aos-delay="700">
         <h5 class="fw-bold"><i class="fas fa-user-graduate me-2" style="color: #d6f402;"></i> Faculty Industrial Placement (FIPP)</h5>
         <p>Inviting industries to host NED faculty during vacations, enriching teaching methodologies and preparing students for market demands.</p>
       </div>
@@ -110,7 +110,7 @@ $result = $stmt->get_result();
 
     <!-- Other Industrial Collaboration -->
     <div class="col-md-6">
-      <div class="card h-100 shadow-sm p-3">
+      <div class="card h-100 shadow-sm p-3" data-aos="fade-up" data-aos-delay="800" >
         <h5 class="fw-bold"><i class="fas fa-handshake me-2" style="color: #d6f402;"></i> Other Industrial Collaboration</h5>
         <p>Facilitating joint efforts in industrial training, lab testing, consultancy services, and R&D through NED's expert faculty and facilities.</p>
       </div>
@@ -139,7 +139,7 @@ $result = $stmt->get_result();
 
   <?php if ($result->num_rows > 0): ?>
       <?php while ($row = $result->fetch_assoc()): ?>
-          <div class="row align-items-center text-center my-4 bg-light shadow-sm p-3 rounded">
+          <div class="row align-items-center text-center my-4 bg-light shadow-sm p-3 rounded" data-aos="fade-up">
               <div class="col-md-3">
                   <h5 class="fw-semibold"><?= htmlspecialchars($row['name']); ?></h5>
                   <p class="text-muted m-0"><?= $row['email'] ? htmlspecialchars($row['email']) : ''; ?></p>

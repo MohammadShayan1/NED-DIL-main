@@ -12,9 +12,9 @@ $result = $conn->query($sql);
 <section>
 <div class="container mt-4">
     <div class="row text-center">
-    <h1 class="mb-4">Newsletters</h1>
+    <h1 class="mb-4" data-aos="fade-down" data-aos-duration="800">Newsletters</h1>
     </div>
-    <table class="table table-bordered table-striped">
+    <table class="table table-bordered table-striped" data-aos="fade-up" data-aos-duration="1000" data-aos-delay="200">
         <thead class="text-center">
             <tr>
                 <th style="background-color: #073470; color: white;">Publications</th>
