@@ -40,7 +40,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         list($uploadSuccess, $uploadResult) = handleFileUpload();
         if (!$uploadSuccess) redirectWithMessage($uploadResult, 'add');
 
-        $stmt = $conn->prepare("INSERT INTO $table (job_title, issue_date, file_path) VALUES (?, ?, ?)");
+        $stmt = $conn->prepare("INSERT INTO $table (job_title, issue_date, job_pdf) VALUES (?, ?, ?)");
         $stmt->bind_param("sss", $_POST['job_title'], $_POST['issue_date'], $uploadResult);
         $msg = $stmt->execute() ? "Job added successfully!" : "Error: " . $stmt->error;
         $stmt->close();
@@ -51,13 +51,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_POST['update'])) {
         $id = $_POST['id'];
         // Get old file path
-        $result = $conn->query("SELECT file_path FROM $table WHERE id=$id");
-        $oldPath = $result->fetch_assoc()['file_path'] ?? '';
+        $result = $conn->query("SELECT job_pdf FROM $table WHERE id=$id");
+        $oldPath = $result->fetch_assoc()['job_pdf'] ?? '';
 
         list($uploadSuccess, $uploadResult) = handleFileUpload($oldPath);
         if (!$uploadSuccess) redirectWithMessage($uploadResult, 'update');
 
-        $stmt = $conn->prepare("UPDATE $table SET job_title=?, issue_date=?, file_path=? WHERE id=?");
+        $stmt = $conn->prepare("UPDATE $table SET job_title=?, issue_date=?, job_pdf=? WHERE id=?");
         $stmt->bind_param("sssi", $_POST['job_title'], $_POST['issue_date'], $uploadResult, $id);
         $msg = $stmt->execute() ? "Job updated successfully!" : "Error: " . $stmt->error;
         $stmt->close();
@@ -67,8 +67,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // DELETE JOB
     if (isset($_POST['delete'])) {
         $id = $_POST['id'];
-        $result = $conn->query("SELECT file_path FROM $table WHERE id=$id");
-        $file = $result->fetch_assoc()['file_path'] ?? '';
+        $result = $conn->query("SELECT job_pdf FROM $table WHERE id=$id");
+        $file = $result->fetch_assoc()['job_pdf'] ?? '';
         if ($file && file_exists($file)) unlink($file);
 
         $stmt = $conn->prepare("DELETE FROM $table WHERE id=?");
@@ -108,7 +108,7 @@ $jobs_experienced = $conn->query("SELECT * FROM job_openings_experienced ORDER B
                         <td><?= $row['id'] ?></td>
                         <td><?= htmlspecialchars($row['job_title']) ?></td>
                         <td><?= strtoupper(date("d-M-Y", strtotime($row['issue_date']))) ?></td>
-                        <td><a href="<?= htmlspecialchars($row['file_path']) ?>" target="_blank">View</a></td>
+                        <td><a href="<?= htmlspecialchars($row['job_pdf']) ?>" target="_blank">View</a></td>
                         <td>
                             <form method="POST" class="d-inline">
                                 <input type="hidden" name="id" value="<?= $row['id'] ?>">
@@ -128,7 +128,7 @@ $jobs_experienced = $conn->query("SELECT * FROM job_openings_experienced ORDER B
                         <td><?= $row['id'] ?></td>
                         <td><?= htmlspecialchars($row['job_title']) ?></td>
                         <td><?= strtoupper(date("d-M-Y", strtotime($row['issue_date']))) ?></td>
-                        <td><a href="<?= htmlspecialchars($row['file_path']) ?>" target="_blank">View</a></td>
+                        <td><a href="<?= htmlspecialchars($row['job_pdf']) ?>" target="_blank">View</a></td>
                         <td>
                             <form method="POST" class="d-inline">
                                 <input type="hidden" name="id" value="<?= $row['id'] ?>">

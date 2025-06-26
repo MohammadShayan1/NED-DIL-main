@@ -46,7 +46,7 @@ function getRecentRecords($conn, $tableName, $columns, $limit = 5) {
             $available_columns[] = $col['Field'];
         }
         
-        // Build safe column selection
+        // Build safe column selection with proper mapping
         $requested_columns = explode(', ', $columns);
         $safe_columns = [];
         
@@ -55,19 +55,24 @@ function getRecentRecords($conn, $tableName, $columns, $limit = 5) {
             if (in_array($col, $available_columns)) {
                 $safe_columns[] = $col;
             } else {
-                // Try common alternatives
-                $alternatives = [
-                    'title' => ['name', 'title', 'subject'],
-                    'company' => ['company', 'organization', 'employer'],
-                    'created_at' => ['created_at', 'date_created', 'created', 'date']
+                // Map common column names to actual database columns
+                $column_mapping = [
+                    'title' => ['job_title', 'Publication', 'title', 'name', 'subject'],
+                    'company' => ['company', 'organization', 'employer', 'company_name'],
+                    'created_at' => ['issue_date', 'created_at', 'date_created', 'created', 'date', 'publish_date']
                 ];
                 
-                if (isset($alternatives[$col])) {
-                    foreach ($alternatives[$col] as $alt) {
-                        if (in_array($alt, $available_columns)) {
-                            $safe_columns[] = "$alt as $col";
+                if (isset($column_mapping[$col])) {
+                    foreach ($column_mapping[$col] as $mapped_col) {
+                        if (in_array($mapped_col, $available_columns)) {
+                            $safe_columns[] = "`$mapped_col` as `$col`";
                             break;
                         }
+                    }
+                } else {
+                    // If no mapping found but column exists, use it
+                    if (in_array($col, $available_columns)) {
+                        $safe_columns[] = "`$col`";
                     }
                 }
             }
@@ -79,14 +84,15 @@ function getRecentRecords($conn, $tableName, $columns, $limit = 5) {
         
         $safe_columns_str = implode(', ', $safe_columns);
         
-        // Try to order by created_at or similar
+        // Try to order by the most appropriate date column
         $order_by = 'id DESC'; // fallback
-        if (in_array('created_at', $available_columns)) {
-            $order_by = 'created_at DESC';
-        } elseif (in_array('date_created', $available_columns)) {
-            $order_by = 'date_created DESC';
-        } elseif (in_array('created', $available_columns)) {
-            $order_by = 'created DESC';
+        $date_columns = ['issue_date', 'created_at', 'date_created', 'created', 'publish_date', 'date'];
+        
+        foreach ($date_columns as $date_col) {
+            if (in_array($date_col, $available_columns)) {
+                $order_by = "`$date_col` DESC";
+                break;
+            }
         }
         
         $sql = "SELECT $safe_columns_str FROM `$tableName` ORDER BY $order_by LIMIT $limit";
@@ -114,11 +120,11 @@ $stats['newsletters'] = getTableCount($conn, 'newsletters');
 $stats['active_internships'] = getTableCount($conn, 'internship_programs', "status = 'active'");
 $stats['active_jobs'] = getTableCount($conn, 'job_openings_fresh', "status = 'active'") + getTableCount($conn, 'job_openings_experienced', "status = 'active'");
 
-// Get recent activities (last 5 items)
-$recent_internships = getRecentRecords($conn, 'internship_programs', 'title, company, created_at', 5);
-$recent_jobs_fresh = getRecentRecords($conn, 'job_openings_fresh', 'title, company, created_at', 3);
-$recent_jobs_experienced = getRecentRecords($conn, 'job_openings_experienced', 'title, company, created_at', 2);
-$recent_newsletters = getRecentRecords($conn, 'newsletters', 'title, created_at', 3);
+// Get recent activities (last 5 items) - using actual database column names
+$recent_internships = getRecentRecords($conn, 'internship_programs', 'subject_text, issue_date', 5);
+$recent_jobs_fresh = getRecentRecords($conn, 'job_openings_fresh', 'job_title, issue_date', 3);
+$recent_jobs_experienced = getRecentRecords($conn, 'job_openings_experienced', 'job_title, issue_date', 2);
+$recent_newsletters = getRecentRecords($conn, 'newsletters', 'Publication, issue_date', 3);
 
 // Check database table status
 $required_tables = ['employees', 'internship_programs', 'job_openings_fresh', 'job_openings_experienced', 'newsletters', 'admin_users'];
@@ -288,9 +294,8 @@ $database_status = empty($missing_tables) ? 'complete' : 'incomplete';
                                 <div class="list-group-item border-0 px-0 py-2">
                                     <div class="d-flex justify-content-between align-items-start">
                                         <div class="flex-grow-1">
-                                            <h6 class="mb-1 fw-semibold"><?php echo htmlspecialchars($internship['title'] ?? 'N/A'); ?></h6>
-                                            <p class="mb-1 text-muted small"><?php echo htmlspecialchars($internship['company'] ?? 'N/A'); ?></p>
-                                            <small class="text-muted"><?php echo isset($internship['created_at']) ? date('M d, Y', strtotime($internship['created_at'])) : 'N/A'; ?></small>
+                                            <h6 class="mb-1 fw-semibold"><?php echo htmlspecialchars($internship['subject_text'] ?? 'N/A'); ?></h6>
+                                            <small class="text-muted"><?php echo isset($internship['issue_date']) ? date('M d, Y', strtotime($internship['issue_date'])) : 'N/A'; ?></small>
                                         </div>
                                     </div>
                                 </div>
@@ -324,9 +329,8 @@ $database_status = empty($missing_tables) ? 'complete' : 'incomplete';
                                 <div class="list-group-item border-0 px-0 py-2">
                                     <div class="d-flex justify-content-between align-items-start">
                                         <div class="flex-grow-1">
-                                            <h6 class="mb-1 fw-semibold"><?php echo htmlspecialchars($job['title'] ?? 'N/A'); ?></h6>
-                                            <p class="mb-1 text-muted small"><?php echo htmlspecialchars($job['company'] ?? 'N/A'); ?></p>
-                                            <small class="text-muted"><?php echo isset($job['created_at']) ? date('M d, Y', strtotime($job['created_at'])) : 'N/A'; ?></small>
+                                            <h6 class="mb-1 fw-semibold"><?php echo htmlspecialchars($job['job_title'] ?? 'N/A'); ?></h6>
+                                            <small class="text-muted"><?php echo isset($job['issue_date']) ? date('M d, Y', strtotime($job['issue_date'])) : 'N/A'; ?></small>
                                         </div>
                                     </div>
                                 </div>
@@ -348,9 +352,8 @@ $database_status = empty($missing_tables) ? 'complete' : 'incomplete';
                                 <div class="list-group-item border-0 px-0 py-2">
                                     <div class="d-flex justify-content-between align-items-start">
                                         <div class="flex-grow-1">
-                                            <h6 class="mb-1 fw-semibold"><?php echo htmlspecialchars($job['title'] ?? 'N/A'); ?></h6>
-                                            <p class="mb-1 text-muted small"><?php echo htmlspecialchars($job['company'] ?? 'N/A'); ?></p>
-                                            <small class="text-muted"><?php echo isset($job['created_at']) ? date('M d, Y', strtotime($job['created_at'])) : 'N/A'; ?></small>
+                                            <h6 class="mb-1 fw-semibold"><?php echo htmlspecialchars($job['job_title'] ?? 'N/A'); ?></h6>
+                                            <small class="text-muted"><?php echo isset($job['issue_date']) ? date('M d, Y', strtotime($job['issue_date'])) : 'N/A'; ?></small>
                                         </div>
                                     </div>
                                 </div>
@@ -378,8 +381,8 @@ $database_status = empty($missing_tables) ? 'complete' : 'incomplete';
                         <div class="list-group list-group-flush mb-3">
                             <?php while ($newsletter = $recent_newsletters->fetch_assoc()): ?>
                                 <div class="list-group-item border-0 px-0 py-2">
-                                    <h6 class="mb-1 fw-semibold"><?php echo htmlspecialchars($newsletter['title'] ?? 'N/A'); ?></h6>
-                                    <small class="text-muted"><?php echo isset($newsletter['created_at']) ? date('M d, Y', strtotime($newsletter['created_at'])) : 'N/A'; ?></small>
+                                    <h6 class="mb-1 fw-semibold"><?php echo htmlspecialchars($newsletter['Publication'] ?? 'N/A'); ?></h6>
+                                    <small class="text-muted"><?php echo isset($newsletter['issue_date']) ? date('M d, Y', strtotime($newsletter['issue_date'])) : 'N/A'; ?></small>
                                 </div>
                             <?php endwhile; ?>
                         </div>

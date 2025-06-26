@@ -67,7 +67,7 @@ require_once 'local-social-seo.php';
         class="container d-flex flex-wrap justify-content-between align-items-center">
         <p
           class="text-white mb-2 mb-md-0 text-center text-md-start flex-grow-1">
-          Directorate of Industrial Liaison (DIL) || <span style="color:#d6f402;"> <i>“Collaborate, Innovate, Transform”</i></span>
+          Directorate of Industrial Liaison (DIL) || <span class="yellowcolor fst-italic">“Collaborate, Innovate, Transform” </span>:<span class="fst-italic" style="color:#d60606;"> Academia-Industry-Government Partnerships</span>
         </p>
         <div class="social-icons d-flex">
           <a href="https://www.linkedin.com/in/directorate-of-industrial-liaison-652b3a221/" class="text-blue mx-2"><i class="fab fa-linkedin"></i></a>
@@ -159,15 +159,16 @@ require_once 'local-social-seo.php';
             <ul class="navbar-nav">
                 <?php
                 $navItems = [
-                    "Home" => "HOME",
+                    "home" => "HOME",
                     "About" => "ABOUT US",
-                    "Internships" => "INTERNSHIPS",
-                    "Jobs" => "JOBS",
-                    "FYDPs" => "FYDPs",
-                    "DILActivities" => "DIL ACTIVITIES",
-                    "IndustrialCollaboration" => "INDUSTRIAL COLLABORATION",
-                    "Newsletter" => "NEWSLETTER",
-                    "Downloads" => "DOWNLOADS"
+                    "internships" => "INTERNSHIPS",
+                    "jobs" => "JOBS",
+                    "fydps" => "FYDPs",
+                    // "dilactivities" => "DIL ACTIVITIES",
+                    "industrialcollaboration" => "INDUSTRIAL COLLABORATION",
+                    "industrialvisit" => "VISITS",
+                    "newsletter" => "NEWSLETTER",
+                    "downloads" => "DOWNLOADS"
 
                 ];
 

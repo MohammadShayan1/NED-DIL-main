@@ -4,6 +4,11 @@
       <div class="col text-center">
         <small id="copyrights">&copy; DIRECTORATE OF INDUSTRIAL LIAISON (DIL), <span id="current-year"></span></small>
       </div>
+      <div class="col social-icons d-flex">
+          <a href="https://www.linkedin.com/in/directorate-of-industrial-liaison-652b3a221/" class="text-blue mx-2"><i class="fab fa-linkedin"></i></a>
+          <a href="#" class="text-black mx-2"><i class="fab fa-x-twitter"></i></a>
+          <a href="https://www.youtube.com/@directorateofindustrialliaison" class="text-danger mx-2"><i class="fab fa-youtube"></i></a>
+        </div>
     </div>
   </div>
 </footer>

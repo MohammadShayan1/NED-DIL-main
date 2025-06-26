@@ -15,34 +15,119 @@ if (!is_dir($uploadDir)) {
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
+    // Debug information (remove after fixing)
+    if (isset($_POST['add'])) {
+        error_log("DEBUG - POST data received:");
+        error_log("Subject: " . ($_POST['subject_text'] ?? 'Not set'));
+        error_log("Date: " . ($_POST['issue_date'] ?? 'Not set'));
+        
+        if (isset($_FILES['pdf_file'])) {
+            error_log("DEBUG - File upload info:");
+            error_log("File name: " . $_FILES['pdf_file']['name']);
+            error_log("File size: " . $_FILES['pdf_file']['size']);
+            error_log("File type: " . $_FILES['pdf_file']['type']);
+            error_log("File error: " . $_FILES['pdf_file']['error']);
+            error_log("File tmp_name: " . $_FILES['pdf_file']['tmp_name']);
+        } else {
+            error_log("DEBUG - No pdf_file in _FILES array");
+            error_log("DEBUG - Available _FILES keys: " . implode(', ', array_keys($_FILES)));
+        }
+        
+        error_log("Upload dir exists: " . (is_dir($uploadDir) ? 'Yes' : 'No'));
+        error_log("Upload dir writable: " . (is_writable($uploadDir) ? 'Yes' : 'No'));
+    }
+
     // Function to handle PDF upload
     function handlePDFUpload($fileInputName, $uploadDir) {
-        if (isset($_FILES[$fileInputName]) && $_FILES[$fileInputName]['error'] === UPLOAD_ERR_OK) {
-            $fileTmpPath = $_FILES[$fileInputName]['tmp_name'];
-            $fileName = basename($_FILES[$fileInputName]['name']);
-            $fileSize = $_FILES[$fileInputName]['size'];
-            $fileType = $_FILES[$fileInputName]['type'];
-            $fileNameCmps = explode(".", $fileName);
-            $fileExtension = strtolower(end($fileNameCmps));
-
-            // Allowed extensions
-            $allowedfileExtensions = ['pdf'];
-
-            if (in_array($fileExtension, $allowedfileExtensions)) {
-                // Sanitize file name and create unique name
-                $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
-                $dest_path = $uploadDir . $newFileName;
-
-                if(move_uploaded_file($fileTmpPath, $dest_path)) {
-                    return $newFileName; // Return the new file name to save in DB
-                } else {
-                    return false;
-                }
-            } else {
-                return false;
+        error_log("DEBUG - handlePDFUpload called with: " . $fileInputName);
+        
+        // Check if file was uploaded
+        if (!isset($_FILES[$fileInputName])) {
+            error_log("DEBUG - File input not found: " . $fileInputName);
+            return null;
+        }
+        
+        $file = $_FILES[$fileInputName];
+        error_log("DEBUG - File details: name=" . $file['name'] . ", size=" . $file['size'] . ", error=" . $file['error']);
+        
+        // Check if a file was actually selected
+        if (empty($file['name']) || $file['size'] == 0) {
+            error_log("DEBUG - No file selected or file is empty");
+            return null; // No file uploaded
+        }
+        
+        $uploadError = $file['error'];
+        
+        // Check for upload errors
+        if ($uploadError !== UPLOAD_ERR_OK) {
+            switch($uploadError) {
+                case UPLOAD_ERR_INI_SIZE:
+                    error_log("File exceeds upload_max_filesize (error code: " . $uploadError . ")");
+                    return "FILE_TOO_LARGE_INI";
+                case UPLOAD_ERR_FORM_SIZE:
+                    error_log("File exceeds MAX_FILE_SIZE (error code: " . $uploadError . ")");
+                    return "FILE_TOO_LARGE_FORM";
+                case UPLOAD_ERR_PARTIAL:
+                    error_log("File upload incomplete (error code: " . $uploadError . ")");
+                    return "UPLOAD_INCOMPLETE";
+                case UPLOAD_ERR_NO_FILE:
+                    error_log("No file uploaded (error code: " . $uploadError . ")");
+                    return null; // No file uploaded
+                default:
+                    error_log("File upload error: " . $uploadError);
+                    return "UPLOAD_ERROR";
             }
         }
-        return null; // No file uploaded
+        
+        $fileTmpPath = $file['tmp_name'];
+        $fileName = basename($file['name']);
+        $fileSize = $file['size'];
+        $fileNameCmps = explode(".", $fileName);
+        $fileExtension = strtolower(end($fileNameCmps));
+
+        error_log("DEBUG - Processing file: " . $fileName . " (extension: " . $fileExtension . ")");
+
+        // Validate file extension
+        $allowedfileExtensions = ['pdf'];
+        if (!in_array($fileExtension, $allowedfileExtensions)) {
+            error_log("Invalid file extension: " . $fileExtension . " for file: " . $fileName);
+            return false;
+        }
+
+        // Validate file size (limit to 10MB)
+        $maxFileSize = 10 * 1024 * 1024; // 10MB
+        if ($fileSize > $maxFileSize) {
+            error_log("File too large: " . $fileSize . " bytes");
+            return false;
+        }
+
+        // Validate MIME type (make it more flexible)
+        if (function_exists('finfo_open')) {
+            $finfo = finfo_open(FILEINFO_MIME_TYPE);
+            $mimeType = finfo_file($finfo, $fileTmpPath);
+            finfo_close($finfo);
+            
+            $allowedMimeTypes = ['application/pdf', 'application/x-pdf'];
+            if (!in_array($mimeType, $allowedMimeTypes)) {
+                error_log("Invalid MIME type: " . $mimeType . " for file: " . $fileName);
+                // Don't return false here, just log it - some valid PDFs might have different MIME types
+            }
+        }
+
+        // Create unique filename
+        $newFileName = md5(time() . $fileName) . '.' . $fileExtension;
+        $dest_path = $uploadDir . $newFileName;
+
+        error_log("DEBUG - Attempting to move file from " . $fileTmpPath . " to " . $dest_path);
+
+        // Move uploaded file
+        if(move_uploaded_file($fileTmpPath, $dest_path)) {
+            error_log("File uploaded successfully: " . $dest_path);
+            return $newFileName;
+        } else {
+            error_log("Failed to move uploaded file from " . $fileTmpPath . " to " . $dest_path);
+            return false;
+        }
     }
 
     // ----- ADD RECORD -----
@@ -52,18 +137,61 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         $uploadedPDF = handlePDFUpload('pdf_file', $uploadDir);
 
-        if ($uploadedPDF === false) {
-            $message = "Error uploading PDF. Please upload a valid PDF file.";
+        // Temporary debug display (remove after fixing)
+        $debugInfo = "<br><strong>Debug Info:</strong><br>";
+        $debugInfo .= "Form submitted: Yes<br>";
+        $debugInfo .= "Subject: " . htmlspecialchars($subject_text) . "<br>";
+        $debugInfo .= "Date: " . htmlspecialchars($issue_date) . "<br>";
+        if (isset($_FILES['pdf_file'])) {
+            $debugInfo .= "File name: " . htmlspecialchars($_FILES['pdf_file']['name']) . "<br>";
+            $debugInfo .= "File size: " . $_FILES['pdf_file']['size'] . " bytes<br>";
+            $debugInfo .= "File error: " . $_FILES['pdf_file']['error'] . "<br>";
+        } else {
+            $debugInfo .= "No file data found in _FILES<br>";
+        }
+        $debugInfo .= "Upload result: " . ($uploadedPDF === null ? 'null (no file)' : ($uploadedPDF === false ? 'false (error)' : 'success: ' . $uploadedPDF)) . "<br>";
+        $debugInfo .= "PHP upload_max_filesize: " . ini_get('upload_max_filesize') . "<br>";
+        $debugInfo .= "PHP post_max_size: " . ini_get('post_max_size') . "<br>";
+        $debugInfo .= "PHP max_file_uploads: " . ini_get('max_file_uploads') . "<br>";
+
+        // Get current PHP upload limits for better error messages
+        $upload_max_filesize = ini_get('upload_max_filesize');
+        $post_max_size = ini_get('post_max_size');
+        
+        if ($uploadedPDF === "FILE_TOO_LARGE_INI") {
+            $message = "Error: The PDF file is too large. Maximum allowed size is {$upload_max_filesize}. Please reduce the file size or ask your administrator to increase the upload limit." . $debugInfo;
+            $activeTab = 'add';
+        } elseif ($uploadedPDF === "FILE_TOO_LARGE_FORM") {
+            $message = "Error: The PDF file exceeds the form's maximum file size limit." . $debugInfo;
+            $activeTab = 'add';
+        } elseif ($uploadedPDF === "UPLOAD_INCOMPLETE") {
+            $message = "Error: The file upload was incomplete. Please try again." . $debugInfo;
+            $activeTab = 'add';
+        } elseif ($uploadedPDF === "UPLOAD_ERROR") {
+            $message = "Error: There was a problem uploading the file. Please try again." . $debugInfo;
+            $activeTab = 'add';
+        } elseif ($uploadedPDF === false) {
+            $message = "Error uploading PDF. Please ensure the file is a valid PDF (max 10MB)." . $debugInfo;
+            $activeTab = 'add';
+        } elseif ($uploadedPDF === null) {
+            $message = "Please select a PDF file to upload." . $debugInfo;
             $activeTab = 'add';
         } else {
+            // Store the relative path to the PDF file
+            $pdf_path = '../assets/uploads/newsletters/' . $uploadedPDF;
+            
             $stmt = $conn->prepare("INSERT INTO Newsletters (Publication, issue_date, pdf_file) VALUES (?, ?, ?)");
-            $stmt->bind_param("sss", $subject_text, $issue_date, $uploadedPDF);
+            $stmt->bind_param("sss", $subject_text, $issue_date, $pdf_path);
             if ($stmt->execute()) {
-                $message = "Record added successfully!";
+                $message = "Newsletter added successfully!";
                 $activeTab = 'view';
             } else {
-                $message = "Error: " . $stmt->error;
+                $message = "Error saving to database: " . $stmt->error;
                 $activeTab = 'add';
+                // Delete uploaded file if database insert failed
+                if (file_exists($uploadDir . $uploadedPDF)) {
+                    unlink($uploadDir . $uploadedPDF);
+                }
             }
             $stmt->close();
         }
@@ -84,8 +212,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         } else {
             if ($uploadedPDF !== null) {
                 // New PDF uploaded, update pdf_file column
+                $pdf_path = '../assets/uploads/newsletters/' . $uploadedPDF;
                 $stmt = $conn->prepare("UPDATE Newsletters SET Publication=?, issue_date=?, pdf_file=? WHERE id=?");
-                $stmt->bind_param("sssi", $subject_text, $issue_date, $uploadedPDF, $id);
+                $stmt->bind_param("sssi", $subject_text, $issue_date, $pdf_path, $id);
             } else {
                 // No new PDF, don't update pdf_file column
                 $stmt = $conn->prepare("UPDATE Newsletters SET Publication=?, issue_date=? WHERE id=?");
@@ -96,7 +225,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $message = "Record updated successfully!";
                 $activeTab = 'view';
             } else {
-                $message = "Error: " . $stmt->error;
+                $message = "Error updating database: " . $stmt->error;
                 $activeTab = 'update';
             }
             $stmt->close();
@@ -209,7 +338,7 @@ $result = $conn->query("SELECT * FROM Newsletters ORDER BY issue_date ASC");
         </div>
         <div class="mb-3">
           <label for="pdf_file" class="form-label">Upload PDF</label>
-          <input type="file" class="form-control" id="pdf_file" name="pdf_file" accept="application/pdf">
+          <input type="file" class="form-control" id="pdf_file" name="pdf_file" accept="application/pdf" required>
         </div>
         <button type="submit" name="add" class="btn btn-primary">Add Record</button>
       </form>
