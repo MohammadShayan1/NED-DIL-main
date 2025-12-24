@@ -256,26 +256,6 @@ htmlspecialchars($row['email'] ?? 'N/A')
 
 ---
 
-## 🤝 Contributing
-
-We welcome contributions to improve the DIL website! Here's how you can help:
-
-### **Development Workflow**
-1. **Fork** the repository
-2. **Create** a feature branch: `git checkout -b feature/amazing-feature`
-3. **Commit** your changes: `git commit -m 'Add amazing feature'`
-4. **Push** to branch: `git push origin feature/amazing-feature`
-5. **Open** a Pull Request
-
-### **Contribution Guidelines**
-- Follow PHP PSR standards
-- Write clear, commented code
-- Test all functionality
-- Update documentation
-- Ensure mobile responsiveness
-
----
-
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
@@ -345,7 +325,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ### 🌟 Star this repository if you found it helpful!
 
-**Made with ❤️ for NED University & Pakistan's Educational Excellence**
+**Made with ❤️ for DIL NED University - Directorate of Industrial Liaison**
 
 [⬆️ Back to Top](#-dil-ned-university---directorate-of-industrial-liaison)
 
