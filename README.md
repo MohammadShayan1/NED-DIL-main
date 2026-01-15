@@ -7,7 +7,6 @@
 
 ### Bridging Academia, Industry & Government for a Better Tomorrow
 
-[![Website](https://img.shields.io/badge/Website-dil.neduet.edu.pk-blue?style=for-the-badge)](https://dil.neduet.edu.pk)
 [![PHP](https://img.shields.io/badge/PHP-7.4+-777BB4?style=for-the-badge&logo=php&logoColor=white)](https://php.net)
 [![MySQL](https://img.shields.io/badge/MySQL-8.0+-4479A1?style=for-the-badge&logo=mysql&logoColor=white)](https://mysql.com)
 [![Bootstrap](https://img.shields.io/badge/Bootstrap-5.0+-7952B3?style=for-the-badge&logo=bootstrap&logoColor=white)](https://getbootstrap.com)
@@ -255,33 +254,8 @@ htmlspecialchars($row['email'] ?? 'N/A')
 
 ---
 
-## 👥 Team
-
-### **Development Team**
-- **Project Lead**: DIL Administration
-- **Backend Developer**: PHP/MySQL Expert
-- **Frontend Developer**: HTML/CSS/JS Specialist
-- **SEO Specialist**: Digital Marketing Expert
-
 ### **Academic Supervision**
-- **NED University**: Computer & Information Systems Engineering Department
 - **DIL Office**: Industrial Liaison Team
-
----
-
-## 📞 Contact & Support
-
-### **DIL Office**
-- 🏢 **Address**: NED University of Engineering & Technology, Karachi, Pakistan
-- 📧 **Email**: dil@neduet.edu.pk
-- 📞 **Phone**: +92-21-99261261
-- 🌐 **Website**: [dil.neduet.edu.pk](https://dil.neduet.edu.pk)
-
-### **Technical Support**
-- 🐛 **Bug Reports**: Create an issue on GitHub
-- 💡 **Feature Requests**: Open a discussion
-- 📚 **Documentation**: Check the wiki section
-
 ---
 
 ## 🏆 Achievements
