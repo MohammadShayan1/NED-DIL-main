@@ -290,7 +290,6 @@ htmlspecialchars($row['email'] ?? 'N/A')
 
 <div align="center">
 
-### 🌟 Star this repository if you found it helpful!
 
 **Made with ❤️ for DIL NED University - Directorate of Industrial Liaison**
 
